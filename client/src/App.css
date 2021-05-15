@@ -1,0 +1,133 @@
+body{
+  background-color: #6AA4B0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.log_card{
+  background-color: #D4F1F4;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  transition: 0.3s;
+  border-radius: 8px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.label_card{
+  background-color: whitesmoke;
+}
+.header__{
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+}
+.user_dashboard {
+  font-size: 60px;
+  font-family: 'Righteous', cursive;
+  color: #189AB4;
+  text-align: center;
+  margin-top: 200px;
+}
+.admin_container {
+  display:flex;
+}
+
+.admin_container .admin_left_nav {
+  min-height: 100vh;
+  background: #75E6DA;
+  border-right: 2px solid rgb(255, 255, 255);
+}
+
+.admin_container  .admin_right {
+  background: #D4F1F4;
+  flex-grow: 1;
+}
+.admin_container  .admin_progress {
+  text-align: center;
+  margin: 20px 0px;
+}
+
+.admin_container .link_tag {
+  font-weight: 700;
+  color: #05445E;
+}
+
+.user_name {
+  font-weight: 700;
+  color: #05445E;
+}
+
+.admin_container h2 {
+  margin: 0px 0px 50px 0px;
+  border-bottom: 1px solid #dbdbdb;
+  color: #414141;
+  font-size: 40px;
+}
+.not_found_container {
+  text-align: center;
+  margin-top: 96px;
+  padding: 20px;
+  background-size: 5px 5px !important;
+  min-height: 100vh;
+  text-align: center;
+  font-size: 90px;
+  font-family: 'Righteous', cursive;
+  color: #05445E;
+}
+.gr27e{
+  /* border: 1px solid black; */
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  transition: 0.3s;
+  border-radius: 8px;
+  padding-bottom: 20px;
+  padding-top: 30px;
+}
+
+.register_fail {
+  width: 100px;
+  margin: auto;
+  padding: 10px;
+  background: red;
+  color: #fff;
+  font-size: 1.2em;  
+  word-wrap: break-word;   
+}
+.new_postSuc{
+cursor: pointer;
+}
+.new_postFail{
+cursor:"not-allowed" !important
+}
+.section_2{
+  /* background-image: url('./Resource/imgs/needHelp.jpg') !important; */
+  background-color: #233634 !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
+}
