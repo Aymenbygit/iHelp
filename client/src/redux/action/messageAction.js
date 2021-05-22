@@ -24,5 +24,16 @@ import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS} from "./type";
         })
       )
   };
+
+  export const deleteMsg = (id) => (dispatch) => {
+    axios.delete(`/post/${id}`).then((res) =>
+      dispatch({
+        type: 'DELETE_MSG_SUCCESS',
+        payload: res.data,
+      })
+      )
+      dispatch(getMessages())
+    
+  };
   
   

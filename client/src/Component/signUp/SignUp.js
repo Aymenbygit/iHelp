@@ -28,18 +28,18 @@ const SignUp = ({ history }) => {
         setErrors(null);
       }, 3000);
     }
-  }, [AuthReducer.isAuth, AuthReducer.error]);
+  }, [AuthReducer.isAuth, AuthReducer.error,history]);
 
   const registerNow = (e) => {
     e.preventDefault();
     dispatch(registerUser(infos));
   };
   return (
-    <div>
+    <div className='container' >
       <br />
       <Container>
         <Row className="justify-content-md-center">
-          <Col md="auto" className="log_card">
+          <Col  className="log_card col-md-5">
             {" "}
             <Form onSubmit={registerNow}>
               <Form.Group style={{ textAlign: "center" }}>
@@ -57,8 +57,8 @@ const SignUp = ({ history }) => {
                   <h3>Sign Up</h3>{" "}
                 </Form.Label>
               </Form.Group>
-              <Form.Row>
-                <Form.Group as={Col}>
+              
+                <Form.Group >
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     // required="required"
@@ -72,9 +72,9 @@ const SignUp = ({ history }) => {
                   {errors &&
                     errors
                       .filter((em) => em.param === "first_name")
-                      .map((el, i) => <div className='badge badge-danger' key={i}><span >{el.msg}</span> </div>)}
+                      .map((el, i) => <span className='badge badge-danger' key={i}>{el.msg}</span> )}
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group >
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     // required="required"
@@ -87,9 +87,8 @@ const SignUp = ({ history }) => {
                   {errors &&
                     errors
                       .filter((em) => em.param === "last_name")
-                      .map((el, i) => <span className='badge badge-secondary' key={i}>{el.msg}</span>)}
+                      .map((el, i) => <span className='badge badge-danger' key={i}>{el.msg}</span>)}
                 </Form.Group>
-              </Form.Row>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
@@ -101,7 +100,7 @@ const SignUp = ({ history }) => {
                 {errors &&
                   errors
                     .filter((em) => em.param === "email")
-                    .map((el, i) => <span className='badge badge-secondary' key={i}>{el.msg}</span>)}
+                    .map((el, i) => <span className='badge badge-danger' key={i}>{el.msg}</span>)}
               </Form.Group>
               <Form.Group>
                 <Form.Label>Password</Form.Label>
@@ -114,7 +113,7 @@ const SignUp = ({ history }) => {
                 {errors &&
                   errors
                     .filter((em) => em.param === "password")
-                    .map((el, i) => <span className='badge badge-secondary' key={i}>{el.msg}</span>)}
+                    .map((el, i) => <span className='badge badge-danger' key={i}>{el.msg}</span>)}
               </Form.Group>
               <Form.Group>
                 <Form.Label>Username</Form.Label>
@@ -128,7 +127,7 @@ const SignUp = ({ history }) => {
                 {errors &&
                   errors
                     .filter((em) => em.param === "username")
-                    .map((el, i) => <span className='badge badge-secondary' key={i}>{el.msg}</span>)}
+                    .map((el, i) => <span className='badge badge-danger' key={i}>{el.msg}</span>)}
               </Form.Group>
               <div style={{ textAlign: "center", marginTop: 50 }}>
                 <Button variant="primary" type="submit" className="btn col-8">
@@ -139,7 +138,7 @@ const SignUp = ({ history }) => {
             <br />
             <div className="gr27e container col-sm-11 ">
               <div className=" col-12">
-                <p>
+                <p style={{ textAlign: "center"}}>
                   Have an account ? <Link to="/login">login</Link>
                 </p>
               </div>

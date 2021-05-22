@@ -10,6 +10,9 @@ export const LOAD_USER_FAIL = "LOAD_USER_FAIL";
 export const ALL_USERS_SUCCESS = "ALL_USERS_SUCCESS";
 export const ALL_USERS_FAIL = "ALL_USERS_FAIL";
 
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAIL = "GET_USER_FAIL";
+
 export const EDIT_SUCCESS = "EDIT_SUCCESS";
 export const EDIT_FAIL = "EDIT_FAIL";
 
@@ -56,3 +59,7 @@ export const DEL_REPORT_FAIL = "DEL_REPORT_FAIL";
 
 export const GET_MSG_SUCCESS = "GET_MSG_SUCCESS";
 export const ADD_MSG_SUCCESS = "ADD_MSG_SUCCESS";
+
+export const SEARCH_BY_TITLE_SUCCESS = "SEARCH_BY_TITLE_SUCCESS";
+export const SEARCH_BY_TITLE_FAIL = "SEARCH_BY_TITLE_FAIL";
+

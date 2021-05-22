@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { addCom, getOpsbyId } from "../../redux/action/postAction";
-import { allUsers, loadUser } from "../../redux/action/authAction";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button, Container, Form } from "react-bootstrap";
+import { addCom } from "../../redux/action/postAction";
 import { getOps } from "../../redux/action/postAction";
 
-const Comment = ({ postli, history, match }) => {
+const Comment = ({ postli}) => {
   const dispatch = useDispatch();
   const [post, setPost] = useState({
     body: "",
@@ -13,13 +12,6 @@ const Comment = ({ postli, history, match }) => {
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
-  const AuthReducer = useSelector((state) => state.AuthReducer);
-  const PostList = useSelector((state) => state.PostReducer);
-  // useEffect(() => {
-  //   if (!AuthReducer.isAuth) {
-  //     history.push("/login");
-  //   }
-  // }, []);
 
   const handleAdd = (e) => {
     if(post.body!==''){e.preventDefault();

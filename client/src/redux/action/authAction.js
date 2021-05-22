@@ -13,7 +13,8 @@ import {
   ALL_USERS_SUCCESS,
   ADD_FAV_FAIL,
   ADD_FAV_SUCCESS,
-  REMOVE_FAV_SUCCESS
+  REMOVE_FAV_SUCCESS,
+  GET_USER_SUCCESS,
 } from "./type";
 import axios from "axios";
 import setToken from "../../setToken";
@@ -36,14 +37,21 @@ export const registerUser = (infos) => (dispatch) => {
 };
 
 export const allUsers = () => (dispatch) => {
-  axios
-    .get("/login/allusers")
-    .then((res) =>
-      dispatch({
-        type: ALL_USERS_SUCCESS,
-        payload: res.data,
-      })
-    )
+  axios.get("/login/allusers").then((res) =>
+    dispatch({
+      type: ALL_USERS_SUCCESS,
+      payload: res.data,
+    })
+  );
+};
+
+export const getUser = (_id) => (dispatch) => {
+  axios.get(`/login/user/${_id}`).then((res) =>
+    dispatch({
+      type: GET_USER_SUCCESS,
+      payload: res.data,
+    })
+  );
 };
 
 export const loadUser = () => (dispatch) => {
@@ -81,9 +89,9 @@ export const loginUser = (data) => (dispatch) => {
     );
 };
 
-export const editUser = (_id, info) => async (dispatch) => {
+export const editUser = (_id, infos) => async (dispatch) => {
   axios
-    .put(`/profile/user/personal_information/${_id}`, info)
+    .put(`/profile/${_id}`, infos)
     .then((res) => {
       dispatch({
         type: EDIT_SUCCESS,
@@ -122,36 +130,38 @@ export const deleteUser = (_id) => async (dispatch) => {
     });
 };
 
-export const addFav = (user_id,_id) => async (dispatch) => {
+export const addFav = (user_id, _id) => async (dispatch) => {
   // setToken();
   axios
-    .put(`/profile/addfavorites/${user_id}`,_id)
+    .put(`/profile/addfavorites/${user_id}`, _id)
     .then((res) => {
       dispatch({
         type: ADD_FAV_SUCCESS,
         payload: res.data,
-      });dispatch(loadUser())
+      });
+      dispatch(loadUser());
     })
     .catch((res) => {
       dispatch({
-        type: ADD_FAV_FAIL
+        type: ADD_FAV_FAIL,
       });
-    })
+    });
 };
 
-export const removeFav = (user_id,_id) => async (dispatch) => {
+export const removeFav = (user_id, _id) => async (dispatch) => {
   // setToken();
   axios
-    .put(`/profile/removefavorites/${user_id}`,_id)
+    .put(`/profile/removefavorites/${user_id}`, _id)
     .then((res) => {
       dispatch({
         type: REMOVE_FAV_SUCCESS,
         payload: res.data,
-      });dispatch(loadUser())
+      });
+      dispatch(loadUser());
     })
     .catch((res) => {
       dispatch({
-        type: ADD_FAV_FAIL
+        type: ADD_FAV_FAIL,
       });
-    })
+    });
 };

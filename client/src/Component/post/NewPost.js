@@ -5,7 +5,6 @@ import {
   Card,
   Container,
   Form,
-  Modal,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addOps } from "../../redux/action/postAction";
@@ -21,6 +20,7 @@ const NewPost = () => {
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   };
+  const [errors, setErrors] = useState(null);
   const handleAddPost = () => {if (AuthReducer.isAuth) {
     if(post.description!==''){
       dispatch(addOps(post));
@@ -31,7 +31,14 @@ const NewPost = () => {
     });
     }
   } else {
-    alert("Connect first (LINK TO LOGIN) ");
+    if (!AuthReducer.isAuth) {
+      setErrors("Please login to add posts ");
+      setTimeout(() => {
+        setErrors(null);
+      }, 4000);
+    }
+    console.log(errors)
+    // alert("Connect first");
   }
   };
   return (
@@ -68,14 +75,25 @@ const NewPost = () => {
                     value={post.description}
                   />
                 </Form.Group>
+                <div>{errors &&  <h6 className='badge badge-danger' style={{marginBottom:20}}>{errors}</h6> }</div>
+
+                {post.description==='' ?
                 <Button
-                  style={post.description==''?{cursor:"not-allowed"}:{cursor:"pointer"}}
+                  style={{cursor:"not-allowed"}}
+                  variant="primary"
+                  onClick={handleAddPost}
+                  disabled
+                >
+                  Post
+                </Button> :
+                <Button
+                  style={{cursor:"pointer"}}
                   variant="primary"
                   onClick={handleAddPost}
                 >
-                  {/* {post.description & post.title !=='' ? 'a':"b"} */}
                   Post
                 </Button>
+}
                 &nbsp;
                 <Button
                   variant="info"

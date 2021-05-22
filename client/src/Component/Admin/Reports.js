@@ -2,34 +2,56 @@ import React, { useEffect } from "react";
 import { deleteRaport, getReports } from "../../redux/action/reportAction";
 import { loadUser } from "../../redux/action/authAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { getOps } from "../../redux/action/postAction";
 
-const Reports = ({ history }) => {
+const Reports = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const ReportReducer = useSelector((state) => state.ReportReducer);
+  const PostList = useSelector((state) => state.PostReducer);
 
   const dispatch = useDispatch();
 
-//AuthReducer.user.type===true
   useEffect(() => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
       dispatch(getReports());
+      dispatch(getOps());
     }
-  }, []);
+  }, [AuthReducer.isAuth,dispatch]);
   return (
-    <div>
-      {ReportReducer &&
-        ReportReducer.map((el) => (
-          <h5>
+    <div className="container">
+      <DropdownButton
+        title={<i className="fas fa-filter">Filter</i>}
+        id="bg-nested-dropdown"
+      >
+        <Dropdown.Item eventKey="1">
+          <div>All</div>
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="2">
+          <div>Available</div>
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="2">
+          <div>Deteled</div>
+        </Dropdown.Item>
+      </DropdownButton>
+      {AuthReducer.user &&
+      AuthReducer.user.type &&
+      AuthReducer.user.type === true &&
+      ReportReducer ? (
+        ReportReducer.map((el,i) => (
+          <h5 key={i}>
             {" "}
-            <Card border="dark" style={{ width: "500px", height: "250px" }}>
+            <Card border="dark">
               <Card.Header>
-                {" "}
-                <Link to={`/posts/${el.target}`}>
-                  Go check
-                </Link>{" "}
+                {PostList.map((el) => el._id).includes(el.target) ? (
+                  <Link to={`/posts/${el.target}`}>Check</Link>
+                ) : (
+                  <div style={{ Color: "red" }}>
+                    <s>Post Deleted</s>
+                  </div>
+                )}
               </Card.Header>
               <Card.Body>
                 <Card.Title>{el.owner}</Card.Title>
@@ -50,7 +72,29 @@ const Reports = ({ history }) => {
               </Card.Body>
             </Card>
           </h5>
-        ))}
+        ))
+      ) : (
+        <div className="container">
+          <div className="row">
+            <div className="col-4">
+              <div className="not_found">
+                <div style={{ fontSize: 100 }}>
+                  <b>404</b>{" "}
+                </div>
+                <div>
+                  <b>THE PAGE YOU WERE LOOKING FOR DOESN'T EXIST.</b>{" "}
+                </div>
+                <p className="PAGE">
+                  You may have mistyped the address or the page may have moved.
+                </p>
+                <a href="/">
+                  <button>GO TO HOME PAGE</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

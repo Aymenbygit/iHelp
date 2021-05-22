@@ -25,6 +25,14 @@ router.post("/new_message", (req, res) => {
           res.status(500).send({ msg: "Server Error" });
         });
     });
-
+//delete msg by id
+    router.delete("/:id", authMiddleware, (req, res) => {
+      Message.findByIdAndRemove({ _id: req.params.id, owner: req.userId })
+        .then(() => res.send("Message deleted successfuly"))
+        .catch((err) => {
+          console.error(err.message);
+          res.status(500).send({ msg: "Server Error" });
+        });
+    });
 
 module.exports = router ;

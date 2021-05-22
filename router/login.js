@@ -8,9 +8,23 @@ const secret_key = process.env.SECRET_KEY;
 const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
+
+
+
 //get all users
 router.get("/allusers", (req, res) => {
   User.find()
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
+});
+//get user by id
+router.get("/user/:id", (req, res) => {
+  User.findById({ _id: req.params.id })
     .then((user) => {
       res.status(200).json(user);
     })

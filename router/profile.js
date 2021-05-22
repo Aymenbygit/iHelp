@@ -21,10 +21,7 @@ router.put( "/:id",
     .isLength({
       min: 2,
     }),
-  body("username", "Ivalid username").isString().isLength({
-    min: 3,
-  }),
-],authMiddleware,
+],
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -58,21 +55,21 @@ router.put("/update/:id", authMiddleware, (req, res) => {
 //add favorite to Array 
 router.put('/addfavorites/:id', authMiddleware, (req,res)=> {
 User.findByIdAndUpdate({_id:req.params.id},{$push:{favorites:{...req.body}}},(err,msg)=> {
-  err ? console.log(err) : res.json({msg:'Announce was added to favorites'})
+  err ? console.log(err) : res.json({msg:'Post was added to favorites'})
 })
 })
 
 //remove ALL favorite from Array 
 router.put('/removefavoritesAll/:id', authMiddleware,(req,res)=> {
   User.findByIdAndUpdate({_id:req.params.id},{$pull:{favorites:{...req.body}}},(err,msg)=> {
-    err ? console.log(err) : res.json({msg:'Announce was removed from favorites'})
+    err ? console.log(err) : res.json({msg:'Post was removed from favorites'})
 })
 })
 
 //remove favorite from Array 
 router.put('/removefavorites/:id', (req,res)=> {
   User.findByIdAndUpdate({_id:req.params.id},{$pull:{favorites:{_id:req.body._id}}},(err,msg)=> {
-    err ? console.log(err) : res.json({msg:'Announce was removed from favorites'})
+    err ? console.log(err) : res.json({msg:'Post was removed from favorites'})
 })
 })
 

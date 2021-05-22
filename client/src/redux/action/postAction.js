@@ -8,7 +8,9 @@ import {
   EDIT_OP_FAIL,
   GET_ONE_OP_SUCCESS,
   ADD_COM_SUCCESS,
-  ADD_COM_FAIL
+  ADD_COM_FAIL,
+  SEARCH_BY_TITLE_SUCCESS,
+  SEARCH_BY_TITLE_FAIL,
 } from "./type";
 import axios from "axios";
 import setToken from "../../setToken";
@@ -42,6 +44,22 @@ export const getOpsbyId = (_id) => (dispatch) => {
   // );
 };
 
+//get ops that i comment
+export const getMyCom = () => (dispatch) => {
+  axios.get("/post/mine").then((res) =>
+    dispatch({
+      type: "GET_MY_COM",
+      payload: res.data,
+    })
+  );
+  // .catch((err) =>
+  //   dispatch({
+  //     type: GET_OP_FAIL,
+  //     payload: err.response.data.errors,
+  //   })
+  // );
+};
+
 export const addOps = (infos) => (dispatch) => {
   axios
     .post("/post/new_post", infos)
@@ -60,46 +78,49 @@ export const addOps = (infos) => (dispatch) => {
 };
 
 export const deleteOps = (id) => (dispatch) => {
-  setToken();
-  axios
-    .delete(`/operation/${id}`)
-    .then((res) =>
-      dispatch({
-        type: DELETE_SUCCESS,
-        payload:res.data
-      })
-    )
-    // .catch((err) =>
-    //   dispatch({
-    //     type: DELETE_FAIL,
-    //     payload: err.response.data,
-    //   })
-    // );
-  dispatch(getOps());
+  axios.delete(`/post/${id}`).then((res) => {
+    dispatch({
+      type: DELETE_SUCCESS,
+      payload: res.data,
+    });
+
+    dispatch(getOps());
+  });
 };
 
-export const editOps = (_id,info) =>async (dispatch) => {
+export const editPost = (_id, info) => async (dispatch) => {
   setToken();
+  axios.put(`/post/update/${_id}`, info).then((res) =>{
+    dispatch({
+      type: SAVED_OP,
+      payload: res.data,
+    })
+    dispatch(getOps());
+  }
+  );
+  
+};
+export const savePost = (infos) => (dispatch) => {
   axios
-    .put(`/operation/update/${_id}`,info)
-    .then((res) =>
+    .get("/post", infos)
+    .then((res) => {
       dispatch({
-        type: SAVED_OP,
+        type: EDIT_OP_SUCCESS,
         payload: res.data,
+      });
+      dispatch(getOps());
+    })
+    .catch((err) =>
+      dispatch({
+        type: EDIT_OP_FAIL,
+        // payload: err.response.data,
       })
-    )
-    // .catch((err) =>
-    //   dispatch({
-    //     type: DELETE_FAIL,
-    //     payload: err.response.data,
-    //   })
-    // );
+    );
 };
-
-export const addCom = (_id,info) => (dispatch) => {
+export const addCom = (_id, info) => (dispatch) => {
   setToken();
   axios
-    .put(`/comment/add/${_id}`,info)
+    .put(`/comment/add/${_id}`, info)
     .then((res) =>
       dispatch({
         type: ADD_COM_SUCCESS,
@@ -114,21 +135,20 @@ export const addCom = (_id,info) => (dispatch) => {
     );
 };
 
-export const saveOps = (infos) => (dispatch) => {
+//To Search post by title
+export const searchByTitle = (search) => (dispatch) => {
   axios
-    .post("/operation", infos)
-    .then((res) =>{
+    .get("/post/search")
+    .then((res) =>
       dispatch({
-        type: EDIT_OP_SUCCESS,
-        payload: res.data,
+        type: SEARCH_BY_TITLE_SUCCESS,
+        // payload: res.data,
       })
-      dispatch(getOps())}
-      )
-    .catch((err) =>
+    )
+    .catch((err) => {
       dispatch({
-        type: EDIT_OP_FAIL,
-        // payload: err.response.data,
-      })
-    );
-    
+        type: SEARCH_BY_TITLE_FAIL,
+        payload: err.response.data.msg,
+      });
+    });
 };

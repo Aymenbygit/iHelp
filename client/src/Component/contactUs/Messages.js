@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addMessage } from "../../redux/action/messageAction";
 
 const Messages = () => {
@@ -78,7 +78,8 @@ const Messages = () => {
                 <div className="form-group">
                   <input
                     type="submit"
-                    className="btn btn-primary py-3 px-5"
+                    className="btn py-3 px-5"
+                    style={{backgroundColor:"#6ECBA4",color:'white'}}
                     value="Send Message"
                     onClick={handleAddMessage}
                   />
@@ -89,17 +90,17 @@ const Messages = () => {
               <ul className="list-unstyled">
                 <li className="mb-2">
                   <strong className="text-white d-block">Address</strong>
-                  Messadine <br /> Msaken,Sousse
+                  4013, Messadine <br /> Msaken,Sousse
                 </li>
                 <li className="mb-2">
                   <strong className="text-white d-block">Email</strong>
-                  <a href="mailto:fcmessadine@gmail.com">
-                    fcmessadine@gmail.com
+                  <a href="mailto:fcmessadine@gmail.com" style={{color:'black'}}>
+                    aymenby2503@gmail.com
                   </a>
                 </li>
                 <li className="mb-2">
                   <strong className="text-white d-block">Phone</strong>
-                  <a href="tel:#">21 731 386</a>
+                  <a href="tel:26 398 196"  style={{color:'black'}}>26 398 196</a>
                 </li>
               </ul>
             </div>

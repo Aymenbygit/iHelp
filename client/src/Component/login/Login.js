@@ -29,9 +29,9 @@ const Login = ({ history }) => {
         setErrors(null);
       }, 3000);
     }
-  }, [AuthReducer.isAuth, AuthReducer.error]);
+  }, [AuthReducer.isAuth, AuthReducer.error,history]);
   return (
-    <div>
+    <div className="container">
       <br/>
       <Container>
         <Row className="justify-content-md-center" >

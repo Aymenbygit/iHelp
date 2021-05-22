@@ -12,29 +12,36 @@ const Msg = (props) => {
   const MsgReducer = useSelector((state) => state.MsgReducer);
   useEffect(() => {
     dispatch(getMessages());
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div>
+    <div className="msg_container">
+    <div
+      className="msg_left_nav "
+      style={{
+        color: "white",
+        fontWeight: "300",
+        borderBottom: "1px solid #353535",
+      }}
+    >
+    </div>
+    <div className="msg_right col-xl-9">
       {MsgReducer &&
-        MsgReducer.filter((el) => el._id == props.match.params.id).map(
+        MsgReducer.filter((el) => el._id === props.match.params.id).map(
           (msg, i) => (
-            <Card key={i} className="col-4">
+            <Card key={i} style={{ margin: 25 }}>
               <Card.Body>
-                <Card.Title>{msg.name}</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
+                <Card.Title>Name : {msg.name}</Card.Title>
               </Card.Body>
               <ListGroup className="list-group-flush">
-                <ListGroupItem>{msg.email}</ListGroupItem>
-                <ListGroupItem>{msg.subject}</ListGroupItem>
-                <ListGroupItem>{msg.subject}</ListGroupItem>
+                <ListGroupItem>Email : {msg.email}</ListGroupItem>
+                <ListGroupItem>Subject : {msg.subject}</ListGroupItem>
+                <ListGroupItem>Body : {msg.body}</ListGroupItem>
               </ListGroup>
             </Card>
           )
         )}
+        </div>
     </div>
   );
 };

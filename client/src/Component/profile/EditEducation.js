@@ -1,76 +1,160 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, loadUser } from "../../redux/action/authAction";
-import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { editUser, loadUser } from "../../redux/action/authAction";
 import ProfileLayout from "./ProfileLayout";
 
 const EditEducation = () => {
-    const dispatch = useDispatch();
-    const AuthReducer = useSelector((state) => state.AuthReducer);
-    useEffect(() => {
+  const dispatch = useDispatch();
+  const AuthReducer = useSelector((state) => state.AuthReducer);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const [info, setInfo] = useState({
+    school: "",
+    highSchool: "",
+    work: "",
+  });
+  const handleChange = (e) => {
+    setInfo({ ...info, [e.target.name]: e.target.value });
+  };
+
+  const update = (e) => {
+    setToggleEdit(!toggleEdit);
+  };
+
+  const CancelEdit = () => {
+    update()
+    if (!AuthReducer.user)
+      setInfo({
+        school: "",
+        highSchool: "",
+        work: "",
+      });
+    else setInfo(AuthReducer.user);
+  };
+
+  const updateNow = (e) => {
+    e.preventDefault();
+    dispatch(editUser(AuthReducer.user._id, info));
+    update();
+  };
+
+  useEffect(() => {
+    if (AuthReducer.isAuth) {
       dispatch(loadUser());
-    }, []);
-    return (
-      <ProfileLayout>
-        <div className="container">
-          <h1 style={{ color: "grey" }}>Work and Education</h1>
-          {AuthReducer.user && (
+    }
+  }, [AuthReducer.isAuth,dispatch]);
+
+  useEffect(() => {
+    if (!AuthReducer.user)
+      setInfo({
+        school: "",
+        highSchool: "",
+        work: "",
+      });
+    else setInfo(AuthReducer.user);
+  }, [AuthReducer.user]);
+  return (
+    <ProfileLayout>
+      <div className="container">
+        <h1 style={{ color: "grey" }}>Work and Education</h1>
+        {!toggleEdit ? (
+          AuthReducer.user && (
             <div className="row">
               <div className="col-lg-6">
                 <table className="table ">
                   <tbody>
-                    <tr >
-                      <td style={{ textAlign: "left" }}>College :</td>
+                    <tr>
+                      <td style={{ textAlign: "left" }}>School :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.first_name}
+                        {AuthReducer.user.school}
                       </td>
                     </tr>
                     <tr>
                       <td style={{ textAlign: "left" }}>High School :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.last_name}
+                        {AuthReducer.user.highSchool}
                       </td>
                     </tr>
                     <tr>
                       <td style={{ textAlign: "left" }}>Work :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.birth_day}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "left" }}>Other :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.adress}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "left" }}>Phone :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.phone}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: "left" }}>Email :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                        {AuthReducer.user.email}
+                        {AuthReducer.user.work}
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <Link to="/profile/edit_profile" style={{ textAlign: "center" }}>
-                  <div style={{ textAlign: "center" }}>
-                    <button className="col-sm-10 btn btn-secondary">
-                      <i className="fas fa-user-edit"></i>&nbsp;&nbsp; Edit
-                    </button>
-                  </div>
-                </Link>
+                <div style={{ textAlign: "center" }}>
+                  <button
+                    className="col-sm-10 btn btn-secondary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      update();
+                    }}
+                  >
+                    <i className="fas fa-user-edit"></i>&nbsp;&nbsp; Edit
+                  </button>
+                </div>
               </div>
             </div>
-          )}
-        </div>
-      </ProfileLayout>
-    );
-}
+          )
+        ) : (
+          <div className="row">
+            <div className="col-lg-6">
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td>School:</td>
+                    <td>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="school"
+                        value={info.school}
+                        onChange={handleChange}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ textAlign: "left" }}>High School :</td>
+                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="highSchool"
+                        value={info.highSchool}
+                        onChange={handleChange}
+                      />{" "}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ textAlign: "left" }}>Work :</td>
+                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="work"
+                        value={info.work}
+                        onChange={handleChange}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style={{ textAlign: "center" }}>
+              <button className="col-sm-5 btn btn-primary" onClick={CancelEdit}>CANCEL </button> &nbsp;
 
-export default EditEducation
+                <button
+                  className="col-sm-5 btn btn-success"
+                  onClick={updateNow}
+                >
+                  <i className="fas fa-user-edit"></i>&nbsp;&nbsp; Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </ProfileLayout>
+  );
+};
+
+export default EditEducation;

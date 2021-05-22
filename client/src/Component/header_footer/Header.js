@@ -12,14 +12,14 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logoutUser } from "../../redux/action/authAction";
 
-const Header = () => {
+const Header = ({ search }) => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
     }
-  }, [AuthReducer.isAuth]);
+  }, [AuthReducer.isAuth,dispatch]);
 
   if (!AuthReducer.user) {
     return (
@@ -49,10 +49,10 @@ const Header = () => {
               </Nav.Link>
               
               <NavDropdown title="Help">
-                <NavDropdown.Item as={Link} to="/">
+                <NavDropdown.Item as={Link} to="/helpcenter">
                   Help center
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/">
+                <NavDropdown.Item as={Link} to="/aboutUs">
                   About Us
                 </NavDropdown.Item>
               </NavDropdown>
@@ -64,7 +64,7 @@ const Header = () => {
                     <i className="fas fa-search"></i>
                   </InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl placeholder="Search" />
+                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
               </InputGroup>
             </Form>
 
@@ -102,9 +102,6 @@ const Header = () => {
               <Nav.Link as={Link} to="/users">
                 Users
               </Nav.Link>
-              <Nav.Link as={Link} to="/contactUs">
-                Contact
-              </Nav.Link>
               <NavDropdown title="Profile">
                 <NavDropdown.Item
                   as={Link}
@@ -117,13 +114,16 @@ const Header = () => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Help">
-                <NavDropdown.Item as={Link} to="/">
+                <NavDropdown.Item as={Link} to="/helpcenter">
                   Help center{" "}
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/">
+                <NavDropdown.Item as={Link} to="/aboutUs">
                   About Us{" "}
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link as={Link} to="/contactUs">
+                Contact
+              </Nav.Link>
             </Nav>
             <Form inline>
               <InputGroup className="mr-sm-2">
@@ -132,7 +132,7 @@ const Header = () => {
                     <i className="fas fa-search"></i>
                   </InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl placeholder="Search" />
+                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
               </InputGroup>
             </Form>
 
@@ -175,20 +175,20 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/admin/posts">
+              <Nav.Link as={Link} to="/posts">
                 Posts
+              </Nav.Link>
+              <Nav.Link as={Link} to="/users">
+                Users
               </Nav.Link>
               <Nav.Link as={Link} to="/admin/reports">
                 Reports
               </Nav.Link>
-              <Nav.Link as={Link} to="/admin/all_users">
-                all_users
-              </Nav.Link>
               <Nav.Link as={Link} to="/admin/messages">
-                messages
+                Messages
               </Nav.Link>
               <NavDropdown title="Profile">
-                <NavDropdown.Item as={Link} to="/profile">
+                <NavDropdown.Item as={Link} to="/profile/user/personal_information">
                   My Profile
                 </NavDropdown.Item>
               </NavDropdown>
@@ -200,7 +200,7 @@ const Header = () => {
                     <i className="fas fa-search"></i>
                   </InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl placeholder="Search" />
+                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
               </InputGroup>
             </Form>
 

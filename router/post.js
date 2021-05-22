@@ -17,8 +17,8 @@ router.post("/new_post", authMiddleware, (req, res) => {
 });
 
 //get user post
-router.get("/", authMiddleware, (req, res) => {
-  Post.find({ owner: req.userId })
+router.get("/mine", authMiddleware, (req, res) => {
+  Post.find({ "comments.owner": req.userId })
     .then((post) => res.send(post))
     .catch((err) => {
       console.error(err.message);
@@ -39,16 +39,16 @@ router.get("/allposts", (req, res) => {
 //get post by id
 router.get("/:id", (req, res) => {
   Post.findById({ _id: req.params.id })
-  .then((post) => res.send(post))
-  .catch((err) => {
-    console.error(err.message);
-    res.status(500).send({ msg: "Server Error" });
-  });
+    .then((post) => res.send(post))
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
 });
 
 //delete post by id
 router.delete("/:id", authMiddleware, (req, res) => {
-    Post.findByIdAndRemove({ _id: req.params.id })
+  Post.findByIdAndRemove({ _id: req.params.id, owner: req.userId })
     .then(() => res.send("post deleted successfuly"))
     .catch((err) => {
       console.error(err.message);
@@ -56,10 +56,9 @@ router.delete("/:id", authMiddleware, (req, res) => {
     });
 });
 
-
 //edit post by id
 router.put("/update/:id", authMiddleware, (req, res) => {
-    Post.findByIdAndUpdate({ _id: req.params.id }, { ...req.body })
+  Post.findByIdAndUpdate({ _id: req.params.id }, { ...req.body })
     .then((data) => res.json(data))
     .catch((err) => {
       console.error(err.message);
@@ -69,7 +68,11 @@ router.put("/update/:id", authMiddleware, (req, res) => {
 
 //add report
 router.post("/report/new_report/:id", authMiddleware, (req, res) => {
-  let newReport = new Report({ ...req.body, owner: req.userId,target:req.params.id});
+  let newReport = new Report({
+    ...req.body,
+    owner: req.userId,
+    target: req.params.id,
+  });
   newReport
     .save()
     .then((report) => res.status(200).send(report))
@@ -103,14 +106,21 @@ router.get("/report/:id", authMiddleware, (req, res) => {
 //delete report by id
 router.delete("/report/delete/:id", authMiddleware, (req, res) => {
   Report.findByIdAndRemove({ _id: req.params.id })
-  .then(() => res.send({ msg: "Report deleted successfuly" }))
-  .catch((err) => {
-    console.error(err.message);
-    res.status(500).send({ msg: "Server Error" });
-  });
+    .then(() => res.send({ msg: "Report deleted successfuly" }))
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
 });
 
-
-
+//search by title
+router.get("/search", (req, res) => {
+  Post.find({ $and: [{ title: { $regex: req.query.title, $options: "i" } }] })
+    .then((posts) => res.send(posts))
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
+});
 
 module.exports = router;

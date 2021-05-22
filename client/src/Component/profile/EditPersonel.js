@@ -10,10 +10,9 @@ const EditPersonel = () => {
   const [info, setInfo] = useState({
     first_name: "",
     last_name: "",
-    username: "",
-    Phone: "",
-    educational_level: "",
-    bio: ""
+    Birth_day: "",
+    gender: "",
+    bio: "",
   });
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -22,7 +21,19 @@ const EditPersonel = () => {
   const update = (e) => {
     setToggleEdit(!toggleEdit);
   };
-  
+  const CancelEdit = () => {
+    update();
+    if (!AuthReducer.user)
+      setInfo({
+        first_name: "",
+        last_name: "",
+        Birth_day: "",
+        gender: "",
+        bio: "",
+      });
+    else setInfo(AuthReducer.user);
+  };
+
   const updateNow = (e) => {
     e.preventDefault();
     dispatch(editUser(AuthReducer.user._id, info));
@@ -33,19 +44,16 @@ const EditPersonel = () => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
     }
-  }, []);
-
-
+  }, [AuthReducer.isAuth,dispatch]);
 
   useEffect(() => {
     if (!AuthReducer.user)
       setInfo({
         first_name: "",
         last_name: "",
-        username: "",
-        Phone: "",
-        educational_level: "",
-        bio: ""
+        Birth_day: "",
+        gender: "",
+        bio: "",
       });
     else setInfo(AuthReducer.user);
   }, [AuthReducer.user]);
@@ -61,7 +69,7 @@ const EditPersonel = () => {
                 <table className="table ">
                   <tbody>
                     <tr>
-                      <td>First name :</td>
+                      <td xs={6}>First name :</td>
                       <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.first_name}
                       </td>
@@ -72,22 +80,22 @@ const EditPersonel = () => {
                         {AuthReducer.user.last_name}
                       </td>
                     </tr>
-                    {/* <tr>
+                    <tr>
                       <td style={{ textAlign: "left" }}>Birth Day :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      {AuthReducer.user.Birth_day}
+                        {AuthReducer.user.Birth_day}
                       </td>
-                    </tr> */}
+                    </tr>
                     <tr>
                       <td style={{ textAlign: "left" }}>Gender :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      {AuthReducer.user.gender}
+                        {AuthReducer.user.gender}
                       </td>
                     </tr>
                     <tr>
                       <td style={{ textAlign: "left" }}>About You :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      {AuthReducer.user.bio}
+                        {AuthReducer.user.bio}
                       </td>
                     </tr>
                   </tbody>
@@ -137,32 +145,43 @@ const EditPersonel = () => {
                   </tr>
                   <tr>
                     <td style={{ textAlign: "left" }}>Birth Day :</td>
-                    {/* <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      <input
-                        className="form-control"
-                        type="text"
-                        name="Birth_day"
-                        value={info.Birth_day}
-                        onChange={handleChange}
-                      />
-                    </td> */}
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>Gender :</td>
                     <td style={{ textAlign: "left", fontWeight: "bold" }}>
                       <input
                         className="form-control"
-                        type="text"
-                        name="gender"
-                        value={info.gender}
+                        type="date"
+                        name="Birth_day"
+                        value={info.Birth_day}
                         onChange={handleChange}
                       />
                     </td>
                   </tr>
                   <tr>
+                    <td style={{ textAlign: "left" }}>Gender :</td>
+                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <select
+                        className="form-control"
+                        value={info.gender}
+                        name="gender"
+                        onChange={handleChange}
+                      >
+                        <option value="">--</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                      {/* <input
+                        className="form-control"
+                        type="text"
+                        name="gender"
+                        value={info.gender}
+                        onChange={handleChange}
+                      /> */}
+                    </td>
+                  </tr>
+                  <tr>
                     <td style={{ textAlign: "left" }}>About You :</td>
                     <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      <input
+                      <textarea
+                        rows="5"
                         className="form-control"
                         type="text"
                         name="bio"
@@ -175,8 +194,16 @@ const EditPersonel = () => {
               </table>
               <div style={{ textAlign: "center" }}>
                 <button
-                  className="col-sm-10 btn btn-success"
+                  className="col-sm-5 btn btn-primary"
+                  onClick={CancelEdit}
+                >
+                  CANCEL{" "}
+                </button>{" "}
+                &nbsp;
+                <button
+                  className="col-sm-5 btn btn-success"
                   onClick={updateNow}
+                  style={{ textAlign: "center" }}
                 >
                   <i className="fas fa-user-edit"></i>&nbsp;&nbsp; Save
                 </button>

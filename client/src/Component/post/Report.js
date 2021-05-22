@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addReport } from "../../redux/action/reportAction";
 
 const Report = ({ handleClose, show, post, match }) => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
-  const OnePost = useSelector((state) => state.OnePost);
 
   const dispatch = useDispatch();
   const [report, setReport] = useState({
@@ -14,27 +13,67 @@ const Report = ({ handleClose, show, post, match }) => {
   const handleChange = (e) => {
     setReport({ ...report, [e.target.name]: e.target.value });
   };
-  const handleAddReport = () => {
-    if (AuthReducer.isAuth) {
-      if (report.description !== "") {
-        dispatch(addReport(report));
-        setReport({
-          report: "",
-        });
-      }
-    } else {
-      alert("Connect first (LINK TO LOGIN) ");
-    }
-  };
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title>Add new operation</Modal.Title>
+          <Modal.Title>Report</Modal.Title>
         </Modal.Header>
+        <Modal.Body>
+          Please select a problem If someone is in immediate danger, get help
+          before reporting to Facebook. Don't wait.
+        </Modal.Body>
         <Form>
+          <table className="table">
+            <tbody>
+              {" "}
+              <tr>
+                <th scope="col-8">Harassment</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Fake</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Physical harm</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Adult content</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Violance</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Smap</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+              <tr>
+                <th scope="col-8">Hate Speech</th>
+                <th scope="col-2" style={{ textAlign: "right" }}>
+                <input type="checkbox" value="" id="flexCheckDefault" />
+                </th>
+              </tr>
+            </tbody>
+          </table>
+
           <Form.Group sm="2" m="2">
-            <Form.Label as="h5">Body</Form.Label>
+            <Form.Label as="h5">Something Else</Form.Label>
             <Form.Control
               as="textarea"
               rows={6}

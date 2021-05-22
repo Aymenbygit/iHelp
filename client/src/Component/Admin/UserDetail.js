@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import UserList from "./UserList";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, ListGroupItem, ListGroup, Container } from "react-bootstrap";
-import ProfileLayout from "../profile/ProfileLayout";
-import { Link } from "react-router-dom";
 import { allUsers } from "../../redux/action/authAction";
 
 const UserDetail = (props) => {
@@ -12,7 +8,8 @@ const UserDetail = (props) => {
 
   useEffect(() => {
     dispatch(allUsers());
-  }, []);
+  }, [dispatch]);
+  
   return (
     <div className="admin_container">
       <div
@@ -32,151 +29,176 @@ const UserDetail = (props) => {
         <hr />
       </div>
       <div className="admin_right">
-        {UserReducer &&
-          UserReducer.filter((el) => el._id == props.match.params.id).map(
-            (user, i) => (
-              <>
-                <h1 style={{ color: "grey" }}>Personal Information</h1>
+        <div className="container">
+          {UserReducer &&
+            UserReducer.filter((el) => el._id === props.match.params.id).map(
+              (user, i) => (
+                <div key={i}>
+                  <h1 style={{ color: "grey" }}>Personal Information</h1>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Name :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.first_name} {user.last_name}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Last name :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.last_name}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Birth Day :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.Birth_day}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Gender :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.gender}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>About You :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.bio}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Username :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.username}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
 
-                <div className="row">
-                  <div className="col-lg-6">
-                    <table className="table ">
-                      <tbody>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>First name :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.first_name}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Last name :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.last_name}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Birth Day :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            Birth Day
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Gender :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            Gender
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>About You :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            About You
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                      <h1 style={{ color: "grey" }}>Work and Education</h1>
+
+                      <table className="table ">
+                        <tbody>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>School :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.school}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>High School :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.highSchool}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>Work :</td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.work}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <h1 style={{ color: "grey" }}>Contact and Basic Info</h1>
+
+                      <table className="table ">
+                        <tbody>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fas fa-envelope"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.email}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fas fa-phone"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.Phone}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fab fa-linkedin-in"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              <a href={user.linkedin} target="_blank" rel="noreferrer">
+                                {user.linkedin}
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fab fa-facebook-f"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              <a href={user.fb} target="_blank" rel="noreferrer">
+                                {user.fb}
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fab fa-github"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              <a href={user.git} target="_blank" rel="noreferrer">
+                                {user.git}
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ textAlign: "left" }}>
+                              <i className="fas fa-map-marker-alt"></i>
+                            </td>
+                            <td
+                              style={{ textAlign: "left", fontWeight: "bold" }}
+                            >
+                              {user.Address}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-                <h1 style={{ color: "grey" }}>Work and Education</h1>
-                <div className="row">
-                  <div className="col-lg-6">
-                    <table className="table ">
-                      <tbody>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>College :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.first_name}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>High School :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.last_name}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Work :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.birth_day}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Other :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.adress}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Phone :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.phone}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ textAlign: "left" }}>Email :</td>
-                          <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                            {user.email}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-        <h1 style={{ color: "grey" }}>Contact and Basic Info</h1>
-
-                <div className="row">
-            <div className="col-lg-6">
-              <table className="table ">
-                <tbody>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>Phone :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                    Phone
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>Email :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                      {user.email}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>LinkedIn :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                    LinkedIn
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>Facebook :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                    Facebook
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>github :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                    github
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ textAlign: "left" }}>Adress :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
-                    Adress
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <Link to="/profile/edit_profile" style={{ textAlign: "center" }}>
-                <div style={{ textAlign: "center" }}>
-                  <button className="col-sm-10 btn btn-secondary">
-                    <i className="fas fa-user-edit"></i>&nbsp;&nbsp; Edit
-                  </button>
-                </div>
-              </Link>
-            </div>
-          </div>
-              </>
-            )
-          )}
+              )
+            )}
+        </div>
       </div>
     </div>
   );

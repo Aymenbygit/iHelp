@@ -7,21 +7,6 @@ body{
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -39,6 +24,15 @@ body{
   padding-bottom: 20px;
   padding-top: 20px;
 }
+.users_card{
+  background-color: #2F6D80;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  transition: 0.3s;
+  border-radius: 8px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
 .label_card{
   background-color: whitesmoke;
 }
@@ -100,11 +94,10 @@ body{
 }
 .gr27e{
   /* border: 1px solid black; */
-  text-align: center;
   background-color: white;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
   transition: 0.3s;
-  border-radius: 8px;
+  border-radius: 4px;
   padding-bottom: 20px;
   padding-top: 30px;
 }
@@ -129,5 +122,93 @@ cursor:"not-allowed" !important
   background-color: #233634 !important;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 300px;
+}
+.home_sec_2{
+  color:white;
+  padding: 100px;
+}
+.not_found {
+  margin-top: 70px;
+  padding: 20px;
+  background-color: rgb(228, 215, 215);
+  font-size: 30px;
+  /* font-family: 'Goblin One', cursive; */
+  color: #05445E;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+.PAGE {
+  color: black;
+  font-size: 22px;
+}
+.not_found button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+.about_us{
+  background-color: #E3F0EF !important;
+}
+.delete{
+  background-color: #D4F1F4;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+  transition: 0.3s;
+  border-radius: 5px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.helpcenter {
+  margin-top: 70px;
+  padding: 20px;
+  background-color: rgb(228, 215, 215);
+  font-size: 30px;
+  /* font-family: 'Goblin One', cursive; */
+  color: #05445E;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+.helpcenter button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  margin:50px 0px 50px 0px
+}
+.home__{
+  clip-path: ellipse(1300px 1140px at 30% 20%);
+  /* background: linear-gradient(90deg, #FFC0CB 50%, #00FFFF 50%); */
+  background-color: red !important;
+}
+
+.msg_container {
+  display:flex;
+}
+
+.msg_container .msg_left_nav {
+  min-height: 100vh;
+  background: #75E6DA;
+  border-right: 2px solid rgb(255, 255, 255);
+  width: 200px;
+  text-align: center;
+}
+.msg_container .msg_left_nav button{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.msg_container  .msg_right {
+  flex-grow: 1;
 }

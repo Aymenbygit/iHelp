@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../../redux/action/authAction";
 import { getOps } from "../../redux/action/postAction"; 
-import { Card, Button, Container, Row, Col, Modal } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AcitivityLayout = (props) => {
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
-  const UserReducer = useSelector((state) => state.UserReducer);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -16,7 +14,7 @@ const AcitivityLayout = (props) => {
       dispatch(loadUser());
       dispatch(getOps());
     }
-  }, []);
+  }, [AuthReducer.isAuth,dispatch]);
   
   return (
     <div className="admin_container">
@@ -29,17 +27,19 @@ const AcitivityLayout = (props) => {
         }}
       >
         <Link to="/activity/my_posts" className="nav-link link_tag">
-          My posts(0)
+          My posts({AuthReducer.user && PostList ? PostList.filter((ell) => ell.owner === AuthReducer.user._id).length : 0})
+
         </Link>
-        <Link to="/activity/my_comments" className="nav-link link_tag">
+        <Link to="/activity/my_comments" className="nav-link link_tag" >
           My Comments(0)
         </Link>
         <Link to="/activity/saved_posts" className="nav-link link_tag">
-          Saved posts(0)
+          Saved posts
+          ({AuthReducer.user ? AuthReducer.user.favorites.length : 0})
         </Link>
-        <Link to="/activity/my_reactions" className="nav-link link_tag">
+        {/* <Link to="/activity/my_reactions" className="nav-link link_tag">
           Posts reaction top/flop
-        </Link>
+        </Link> */}
       </div>
       <div className="admin_right">{props.children}</div>
     </div>

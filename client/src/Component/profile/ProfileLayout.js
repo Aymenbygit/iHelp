@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProfileLayout = (props) => {
   return (
@@ -22,8 +22,9 @@ const ProfileLayout = (props) => {
         <Link to="/profile/user/contact" className="nav-link link_tag">
           Contact and Basic Info
         </Link>
+        <hr color="white" style={{height:10}} />
         <Link to="/profile/user/delete" className="nav-link link_tag">
-          Delete account
+          <span style={{color:'red'}}> <i className="fas fa-user-times"></i> Delete account!</span> 
         </Link>
       </div>
       <div className="admin_right">{props.children}</div>
