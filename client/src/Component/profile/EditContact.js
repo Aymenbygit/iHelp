@@ -7,6 +7,7 @@ const EditContact = () => {
   const dispatch = useDispatch();
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [errors, setErrors] = useState(null);
   const [info, setInfo] = useState({
     email: "",
     Phone: "",
@@ -45,7 +46,13 @@ const EditContact = () => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
     }
-  }, [AuthReducer.isAuth,dispatch]);
+    if (AuthReducer.error) {
+      setErrors(AuthReducer.error);
+      setTimeout(() => {
+        setErrors(null);
+      }, 5000);
+    }
+  }, [AuthReducer.isAuth, dispatch, AuthReducer.error]);
 
   useEffect(() => {
     if (!AuthReducer.user)
@@ -79,6 +86,16 @@ const EditContact = () => {
                       <td style={{ textAlign: "left" }}>Phone :</td>
                       <td style={{ textAlign: "left", fontWeight: "bold" }}>
                         {AuthReducer.user.Phone}
+                        <h6>
+                          {errors &&
+                            errors
+                              .filter((em) => em.param === "Phone")
+                              .map((el, i) => (
+                                <span className="badge badge-secondary" key={i}>
+                                  {el.msg}
+                                </span>
+                              ))}
+                        </h6>
                       </td>
                     </tr>
                     <tr>

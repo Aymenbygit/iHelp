@@ -7,17 +7,22 @@ const EditPersonel = () => {
   const dispatch = useDispatch();
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [errors, setErrors] = useState(null);
+  const [file, setFile] = useState("");
   const [info, setInfo] = useState({
     first_name: "",
     last_name: "",
     Birth_day: "",
     gender: "",
     bio: "",
+    avatar: "",
   });
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
-
+  const selectImageToUpload = (e) => {
+    setFile(e.target.files[0]);
+  };
   const update = (e) => {
     setToggleEdit(!toggleEdit);
   };
@@ -30,13 +35,16 @@ const EditPersonel = () => {
         Birth_day: "",
         gender: "",
         bio: "",
+        avatar: "",
       });
-    else setInfo(AuthReducer.user);
+    else {
+      setInfo(AuthReducer.user);
+    }
   };
 
   const updateNow = (e) => {
     e.preventDefault();
-    dispatch(editUser(AuthReducer.user._id, info));
+    dispatch(editUser(AuthReducer.user._id, info, file));
     update();
   };
 
@@ -44,7 +52,13 @@ const EditPersonel = () => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
     }
-  }, [AuthReducer.isAuth,dispatch]);
+    if (AuthReducer.error) {
+      setErrors(AuthReducer.error);
+      setTimeout(() => {
+        setErrors(null);
+      }, 5000);
+    }
+  }, [AuthReducer.isAuth, dispatch, AuthReducer.error]);
 
   useEffect(() => {
     if (!AuthReducer.user)
@@ -55,46 +69,82 @@ const EditPersonel = () => {
         gender: "",
         bio: "",
       });
-    else setInfo(AuthReducer.user);
+    else {
+      setInfo(AuthReducer.user);
+    }
   }, [AuthReducer.user]);
   return (
     <ProfileLayout>
       <div className="container">
-        {/* <img src={Pic} style={{opacity:0.6,backgroundRepeat:'no-repeat',backgroundSize:"cover"}} /> */}
         <h1 style={{ color: "grey" }}>Personal Information</h1>
         {!toggleEdit ? (
           AuthReducer.user && (
             <div className="row">
               <div className="col-lg-6">
+                <img
+                  style={{ width: "150px", borderRadius: "50%" }}
+                  alt="avatar"
+                  src={AuthReducer.user.avatar}
+                />
                 <table className="table ">
                   <tbody>
                     <tr>
-                      <td xs={6}>First name :</td>
+                      <td>First name :</td>
                       <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.first_name}
+                        <h6>
+                          {errors &&
+                            errors
+                              .filter((em) => em.param === "first_name")
+                              .map((el, i) => (
+                                <span className="badge badge-secondary" key={i}>
+                                  {el.msg}
+                                </span>
+                              ))}
+                        </h6>
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ textAlign: "left" }}>Last name :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <td>Last name :</td>
+                      <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.last_name}
+                        <h6>
+                          {errors &&
+                            errors
+                              .filter((em) => em.param === "last_name")
+                              .map((el, i) => (
+                                <span className="badge badge-secondary" key={i}>
+                                  {el.msg}
+                                </span>
+                              ))}
+                        </h6>
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ textAlign: "left" }}>Birth Day :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <td>Birth Day :</td>
+                      <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.Birth_day}
+                        <h6>
+                          {errors &&
+                            errors
+                              .filter((em) => em.param === "Birth_day")
+                              .map((el, i) => (
+                                <span className="badge badge-secondary" key={i}>
+                                  {el.msg}
+                                </span>
+                              ))}
+                        </h6>
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ textAlign: "left" }}>Gender :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <td>Gender :</td>
+                      <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.gender}
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ textAlign: "left" }}>About You :</td>
-                      <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                      <td>About You :</td>
+                      <td style={{ fontWeight: "bold" }}>
                         {AuthReducer.user.bio}
                       </td>
                     </tr>
@@ -117,8 +167,19 @@ const EditPersonel = () => {
         ) : (
           <div className="row">
             <div className="col-lg-6">
+              <img
+                src={info.avatar}
+                style={{ width: "150px", borderRadius: "50%" }}
+                alt=""
+              />
               <table className="table ">
                 <tbody>
+                  <tr>
+                    <td>Upload Image :</td>
+                    <td>
+                    <input type="file" name="avatar" onChange={selectImageToUpload} />
+                    </td>
+                  </tr>
                   <tr>
                     <td>First name :</td>
                     <td>
@@ -132,8 +193,8 @@ const EditPersonel = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ textAlign: "left" }}>Last name :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                    <td>Last name :</td>
+                    <td style={{ fontWeight: "bold" }}>
                       <input
                         className="form-control"
                         type="text"
@@ -144,8 +205,8 @@ const EditPersonel = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ textAlign: "left" }}>Birth Day :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                    <td>Birth Day :</td>
+                    <td style={{ fontWeight: "bold" }}>
                       <input
                         className="form-control"
                         type="date"
@@ -156,8 +217,8 @@ const EditPersonel = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ textAlign: "left" }}>Gender :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                    <td>Gender :</td>
+                    <td style={{ fontWeight: "bold" }}>
                       <select
                         className="form-control"
                         value={info.gender}
@@ -168,18 +229,11 @@ const EditPersonel = () => {
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
-                      {/* <input
-                        className="form-control"
-                        type="text"
-                        name="gender"
-                        value={info.gender}
-                        onChange={handleChange}
-                      /> */}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ textAlign: "left" }}>About You :</td>
-                    <td style={{ textAlign: "left", fontWeight: "bold" }}>
+                    <td>About You :</td>
+                    <td style={{ fontWeight: "bold" }}>
                       <textarea
                         rows="5"
                         className="form-control"

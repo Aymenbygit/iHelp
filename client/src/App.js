@@ -29,18 +29,22 @@ import { useState } from "react";
 import Delete from "./Component/profile/Delete";
 import EditPost from "./Component/post/EditPost";
 import HelpCenter from "./Component/home/HelpCenter";
+import Footer from "./Component/header_footer/Footer";
+import UserPagination from "./Component/post/UserPagination";
 
 function App() {
   const UserReducer = useSelector((state) => state.UserReducer);
+  const PostList = useSelector((state) => state.PostReducer);
   const [searchValue, setSearchValue] = useState("");
 
+  
   const search = (inputValue) => {
     setSearchValue(inputValue);
   };
 
   return (
     <Router>
-      <Header search={search}/>
+      <Header search={search} />
       <Switch>
         <PrivateRoutes
           exact
@@ -82,7 +86,6 @@ function App() {
         <PrivateRoutes exact path="/admin/message/:id" component={Msg} />
         <PrivateRoutes exact path="/admin/all_users" component={UserList} />
 
-
         <Route exact path="/" component={Home} />
         <Route exact path="/posts" component={PostsList} />
         {/* <Route exact path="/posts"
@@ -99,7 +102,12 @@ function App() {
           />
           
         )}/> */}
-        <Route exact path="/posts/:id" component={Posts} />
+        {/* <Route exact path="/posts/:id" component={Posts} /> */}
+        <Route
+          exact
+          path="/posts/:id"
+          render={(props) => <Posts PostList={PostList} {...props} />}
+        />
         <Route
           exact
           path="/users"
@@ -107,23 +115,21 @@ function App() {
             <UserList
               users={
                 UserReducer &&
-                UserReducer.filter((user) =>
-                  user.username
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase().trim())
-                    ||
+                UserReducer.filter(
+                  (user) =>
+                    user.username
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase().trim()) ||
                     user.first_name
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase().trim())
-                    ||
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase().trim()) ||
                     user.last_name
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase().trim())
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase().trim())
                 )
               }
               search={search}
             />
-            
           )}
         />
         <PublicRoute exact path="/login" component={Login} />
@@ -132,8 +138,11 @@ function App() {
         <PublicRoute exact path="/contactUs" component={Messages} />
         <PublicRoute exact path="/aboutUs" component={About} />
         <PublicRoute exact path="/helpcenter" component={HelpCenter} />
+        <Route exact path="/try" component={UserPagination} />
         <PublicRoute restricted={false} component={Notfound} />
       </Switch>
+      {/* <Try/> */}
+      <Footer />
     </Router>
   );
 }

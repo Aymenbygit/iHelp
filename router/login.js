@@ -8,47 +8,6 @@ const secret_key = process.env.SECRET_KEY;
 const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
-
-
-
-//get all users
-router.get("/allusers", (req, res) => {
-  User.find()
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.error(err.message);
-      res.status(500).send({ msg: "Server Error" });
-    });
-});
-//get user by id
-router.get("/user/:id", (req, res) => {
-  User.findById({ _id: req.params.id })
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.error(err.message);
-      res.status(500).send({ msg: "Server Error" });
-    });
-});
-//load connected user
-router.get("/", authMiddleware, (req, res) => {
-  User.findById(req.userId)
-    .select("-__v")
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ msg: "User not found" });
-      }
-      res.status(200).json(user);
-    })
-    .catch((err) => {
-      console.error(err.message);
-      res.status(500).send({ msg: "Server Error" });
-    });
-});
-
 //login user
 router.post(
   "/",
@@ -87,5 +46,42 @@ router.post(
     });
   }
 );
+//get all users
+router.get("/allusers", (req, res) => {
+  User.find()
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
+});
+//get user by id
+router.get("/user/:id", (req, res) => {
+  User.findById({ _id: req.params.id })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
+});
+//load connected user
+router.get("/", authMiddleware, (req, res) => {
+  User.findById(req.userId)
+    .select("-__v")
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      res.status(500).send({ msg: "Server Error" });
+    });
+});
 
 module.exports = router;

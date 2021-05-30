@@ -8,7 +8,7 @@ const Delete = () => {
     const dispatch = useDispatch();
   return (
     <Container>
-      <Row className="justify-content-md-center" style={{ marginTop: 50 }}>
+      <Row className="justify-content-md-center" style={{ marginTop: 120,marginBottom: 120 }}>
         <Col className="log_card col-md-8">
           <div style={{ marginTop: 20 }}>
             <div>

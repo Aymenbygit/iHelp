@@ -1,14 +1,17 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.PORT 
+const cors = require('cors')
 
 const ConnectDB = require('./helpers/ConnectDB')
 
 //connect to DB
 ConnectDB();
 
-//middelware
-app.use(express.json());
+//middlewares
+app.use(cors())
+app.use(express.json())
+app.use("/uploads",express.static(__dirname + "/uploads"))
 
 //define Routes
 app.use('/register',require('./router/register'))

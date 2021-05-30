@@ -17,22 +17,24 @@ import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS} from "./type";
   export const addMessage = (infos) => (dispatch) => {
     axios
       .post("/message/new_message", infos)
-      .then((res) =>
+      .then((res) =>{
         dispatch({
           type: ADD_MSG_SUCCESS,
           payload: res.data,
         })
+        dispatch(getMessages())
+      }
       )
   };
 
   export const deleteMsg = (id) => (dispatch) => {
-    axios.delete(`/post/${id}`).then((res) =>
+    axios.delete(`/post/${id}`).then((res) =>{
       dispatch({
         type: 'DELETE_MSG_SUCCESS',
         payload: res.data,
       })
+      dispatch(getMessages())}
       )
-      dispatch(getMessages())
     
   };
   

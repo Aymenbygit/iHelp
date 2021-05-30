@@ -89,9 +89,12 @@ export const loginUser = (data) => (dispatch) => {
     );
 };
 
-export const editUser = (_id, infos) => async (dispatch) => {
+export const editUser = (_id,info,file) => async (dispatch) => {
+  let formData = new FormData()
+  formData.append("info", JSON.stringify(info))
+  formData.append("avatar", file)
   axios
-    .put(`/profile/${_id}`, infos)
+    .put(`/profile/${_id}`, formData)
     .then((res) => {
       dispatch({
         type: EDIT_SUCCESS,

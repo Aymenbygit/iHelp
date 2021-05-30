@@ -15,6 +15,7 @@ const SavedPosts = (props) => {
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const UserReducer = useSelector((state) => state.UserReducer);
+
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -28,9 +29,9 @@ const SavedPosts = (props) => {
   return (
     <div>
       <AcitivityLayout>
-        {AuthReducer.user &&
-          AuthReducer.user.favorites.map((ela) => (
-            <h6>
+        {AuthReducer.user && 
+          AuthReducer.user.favorites.map((ela,i) => (
+            <h6 key={i}>
               {" "}
               {PostList &&
                 PostList.filter((ell) => ell._id === ela._id).map((post, i) => (

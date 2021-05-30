@@ -33,10 +33,9 @@ const Home = () => {
             </div>
             <div className="col-lg-6 order-lg-1">
               <div className="p-5">
-                <h2 className="display-4">A public platform</h2>
+                <h2 className="display-4">A public Knowledge Sharing Platform</h2>
                 <p>
-                  building the definitive collection of coding questions &
-                  answers.
+                  
                 </p>
               </div>
             </div>
@@ -115,7 +114,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="col-md-3 col-sm-6" style={{ paddingBottom: 60 }}>
+            <div className="col-md-3 col-sm-6" style={{ paddingBottom: 35 }}>
               <div className="fun-box text-center">
                 <i className="fas fa-eye"></i>
 

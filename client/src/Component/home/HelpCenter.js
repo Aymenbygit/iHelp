@@ -1,13 +1,6 @@
 import React from 'react'
 
 const HelpCenter = () => {
-    // return (
-    //     <div>
-    //        <h1>COMMING SOON </h1>
-    //        <h3>we're currently working on creating this interface</h3> 
-
-    //     </div>
-    // )
     return (
         <div className="container">
           <div className="row">
@@ -23,7 +16,7 @@ const HelpCenter = () => {
                 we're currently working on creating this interface.
                 </p>
                 <a href="/">
-                  <button className="col-4">GO TO HOME PAGE</button>
+                  <button className="col-lg-4">GO TO HOME PAGE</button>
                 </a>
               </div>
             </div>

@@ -5,7 +5,8 @@ import {
   ListGroupItem,
   ListGroup,
   Dropdown,
-  DropdownButton
+  DropdownButton,
+  Container,
 } from "react-bootstrap";
 import { getMessages } from "../../redux/action/messageAction";
 import { Link } from "react-router-dom";
@@ -26,35 +27,37 @@ const MsgList = () => {
           fontWeight: "300",
           borderBottom: "1px solid #353535",
         }}
-      >
-        <DropdownButton
-          title={<i class="fas fa-filter">Filter</i>}
-          id="bg-nested-dropdown"
-        >
-          <Dropdown.Item eventKey="1">
-            <div>All</div>
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            <div>Read</div>
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            <div>Unread</div>
-          </Dropdown.Item>
-        </DropdownButton>
-      </div>
+      ></div>
       <div className="msg_right col-xl-9">
         <div className="">
+          <Container>
+            <DropdownButton
+              title={<i className="fas fa-filter">Filter</i>}
+              id="bg-nested-dropdown"
+              style={{paddingTop:"30px"}}
+            >
+              <Dropdown.Item eventKey="1">
+                <div>All</div>
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="2">
+                <div>Read</div>
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="2">
+                <div>Unread</div>
+              </Dropdown.Item>
+            </DropdownButton>
+          </Container>
           {MsgReducer &&
             MsgReducer.map((msg, i) => (
-              <div>
-                <Card key={i} style={{ margin: 25 }}>
+              <div key={i} >
+                <Card  style={{ margin: 25 }}>
                   <Card.Body>
                     <Card.Title>{msg.subject}</Card.Title>
-                    <Card.Text>{msg.body}</Card.Text>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
-                    <ListGroupItem>{msg.email}</ListGroupItem>
+                    <ListGroupItem>{msg.body}</ListGroupItem>
                     <ListGroupItem>{msg.name}</ListGroupItem>
+                    <ListGroupItem>{msg.email}</ListGroupItem>
                   </ListGroup>
                   <Card.Body style={{ textAlign: "center" }}>
                     <Card.Link as={Link} to={`/admin/message/${msg._id}`}>

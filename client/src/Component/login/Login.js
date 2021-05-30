@@ -34,7 +34,7 @@ const Login = ({ history }) => {
     <div className="container">
       <br/>
       <Container>
-        <Row className="justify-content-md-center" >
+        <Row className="justify-content-md-center" style={{ marginBottom: "100px",marginTop: "40px" }} >
           <Col md="auto" className="log_card">
             {" "}
             <Form onSubmit={login} >

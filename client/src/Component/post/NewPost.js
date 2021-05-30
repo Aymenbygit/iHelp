@@ -1,45 +1,44 @@
 import React, { useState } from "react";
-import {
-  Accordion,
-  Button,
-  Card,
-  Container,
-  Form,
-} from "react-bootstrap";
+import { Accordion, Button, Card, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addOps } from "../../redux/action/postAction";
+import { addPost } from "../../redux/action/postAction";
 
 const NewPost = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
+  const [files, setFile] = useState([]);
   const [post, setPost] = useState({
     title: "",
     description: "",
-    comment: [],
   });
+  
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    if(e.target.name === "gallery"){
+      setFile(e.target.files)
+    } else {
+      setPost({ ...post, [e.target.name]: e.target.value });
+    }
   };
+
   const [errors, setErrors] = useState(null);
-  const handleAddPost = () => {if (AuthReducer.isAuth) {
-    if(post.description!==''){
-      dispatch(addOps(post));
-    setPost({
-      title: "",
-      description: "",
-      comment: [],
-    });
+  const handleAddPost = () => {
+    if (AuthReducer.isAuth) {
+      if (post.description !== "") {
+        dispatch(addPost(post, files));
+        setPost({
+          title: "",
+          description: "",
+          gallery: "",
+        });
+      }
+    } else {
+      if (!AuthReducer.isAuth) {
+        setErrors("Please login to add posts ");
+        setTimeout(() => {
+          setErrors(null);
+        }, 4000);
+      }
     }
-  } else {
-    if (!AuthReducer.isAuth) {
-      setErrors("Please login to add posts ");
-      setTimeout(() => {
-        setErrors(null);
-      }, 4000);
-    }
-    console.log(errors)
-    // alert("Connect first");
-  }
   };
   return (
     <div>
@@ -52,7 +51,14 @@ const NewPost = () => {
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="1">
-              <Form style={{ marginLeft: "5%", marginRight: "5%",marginBottom: "1%",marginTop: "1%" }}>
+              <Form
+                style={{
+                  marginLeft: "5%",
+                  marginRight: "5%",
+                  marginBottom: "1%",
+                  marginTop: "1%",
+                }}
+              >
                 <Form.Group>
                   <Form.Label as="h5">Title</Form.Label>
                   <Form.Control
@@ -61,6 +67,15 @@ const NewPost = () => {
                     name="title"
                     onChange={handleChange}
                     value={post.title}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label as="h5">Upload Images :</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="gallery"
+                    onChange={handleChange}
+                    multiple
                   />
                 </Form.Group>
                 <Form.Group>
@@ -75,25 +90,34 @@ const NewPost = () => {
                     value={post.description}
                   />
                 </Form.Group>
-                <div>{errors &&  <h6 className='badge badge-danger' style={{marginBottom:20}}>{errors}</h6> }</div>
-
-                {post.description==='' ?
-                <Button
-                  style={{cursor:"not-allowed"}}
-                  variant="primary"
-                  onClick={handleAddPost}
-                  disabled
-                >
-                  Post
-                </Button> :
-                <Button
-                  style={{cursor:"pointer"}}
-                  variant="primary"
-                  onClick={handleAddPost}
-                >
-                  Post
-                </Button>
-}
+                <div>
+                  {errors && (
+                    <h6
+                      className="badge badge-danger"
+                      style={{ marginBottom: 20 }}
+                    >
+                      {errors}
+                    </h6>
+                  )}
+                </div>
+                {post.description === "" ? (
+                  <Button
+                    style={{ cursor: "not-allowed" }}
+                    variant="primary"
+                    onClick={handleAddPost}
+                    disabled
+                  >
+                    Post
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ cursor: "pointer" }}
+                    variant="primary"
+                    onClick={handleAddPost}
+                  >
+                    Post
+                  </Button>
+                )}
                 &nbsp;
                 <Button
                   variant="info"

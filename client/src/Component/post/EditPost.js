@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Container,
-  Form
-} from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { editPost, getOps, getOpsbyId } from "../../redux/action/postAction";
-import {Link} from "react-router-dom"
 
 const EditPost = (props) => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
@@ -33,7 +27,7 @@ const EditPost = (props) => {
       dispatch(getOps());
     }
     dispatch(getOps());
-  }, [AuthReducer.isAuth,dispatch,props.match.params.id]);
+  }, [AuthReducer.isAuth, dispatch, props.match.params.id]);
   useEffect(() => {
     if (!SavedPost)
       setPost({
@@ -45,7 +39,11 @@ const EditPost = (props) => {
   return (
     <div>
       <Container>
-        <Card>
+        <Card
+          style={{
+            marginTop: "3%",
+          }}
+        >
           <Form
             style={{
               marginLeft: "5%",
@@ -85,20 +83,27 @@ const EditPost = (props) => {
                 Save
               </Button>
             ) : (
-              <Link onClick={() => window.history.back()}>
                 <Button
                   style={{ cursor: "pointer" }}
-                  variant="primary"
-                  onClick={handleEditPost}
+                  variant="success"
+                  onClick={() =>{
+                    handleEditPost()
+                    window.history.back()
+                    }}
                 >
                   Save
                 </Button>
-              </Link>
             )}
             &nbsp;
             <Button
-              variant="info"
+              variant="primary"
               onClick={() => setPost(SavedPost && SavedPost)}
+            >
+              Reset
+            </Button>&nbsp;
+            <Button
+              variant="info"
+              onClick={() => window.history.back()}
             >
               Cancel
             </Button>

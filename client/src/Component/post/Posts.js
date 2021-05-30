@@ -45,6 +45,7 @@ const Posts = (props) => {
         PostList.filter((ell) => ell._id === props.match.params.id).map(
           (post, i) => (
             <Container key={i}>
+              
               <Card>
                 <Card.Header as="h5">
                   <Row>
@@ -139,8 +140,8 @@ const Posts = (props) => {
                   </Col>
                   <Col className="col-lg-10">
                     <Card.Body>
-                      <Card.Title>Special title treatment</Card.Title>
                       <Card.Text>{post.description}</Card.Text>
+                      {post.gallery.map((el,i)=><img key={i} src={el} alt="Image" className="img_post"/>)}
                     </Card.Body>
                   </Col>
                 </Row>
@@ -175,15 +176,21 @@ const Posts = (props) => {
                   </Row>
                 </Card>
               ))}
-              <hr />
+              {/* <hr /> */}
             </Container>
           )
         )}
       <Comment
         postli={PostList.filter((la) => la._id === props.match.params.id).map(
           (eleee, i) => eleee._id
+        )}/>
+        {/* {!SavedPost &&  <Notfound/>}
+        {SavedPost &&  <Comment
+        postli={PostList.filter((la) => la._id === props.match.params.id).map(
+          (eleee, i) => eleee._id
         )}
-      />
+      />} */}
+      
     </div>
   );
 };

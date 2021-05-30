@@ -4,7 +4,7 @@ const Notfound = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-4">
+        <div className="col-lg-4">
           <div className="not_found">
             <div style={{ fontSize: 100 }}>
               <b>404</b>{" "}

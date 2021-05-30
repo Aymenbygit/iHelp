@@ -28,6 +28,11 @@ const Mycomments = () => {
     <div>
       <div>
         <AcitivityLayout>
+          {MyComments && MyComments.length=== 0 &&
+      <Container>
+        <h4 style={{paddingTop:'20px'}}>You Did Not Comment Any Post Yet</h4>
+      </Container>
+      }
           {MyComments &&
             MyComments.map((post, i) => (
               <Container key={i}>

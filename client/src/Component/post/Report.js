@@ -5,14 +5,16 @@ import { addReport } from "../../redux/action/reportAction";
 
 const Report = ({ handleClose, show, post, match }) => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
-
   const dispatch = useDispatch();
+
   const [report, setReport] = useState({
     body: "",
+    checkbox: "",
   });
   const handleChange = (e) => {
     setReport({ ...report, [e.target.name]: e.target.value });
   };
+
   return (
     <div>
       <Modal show={show} onHide={handleClose}>
@@ -21,64 +23,29 @@ const Report = ({ handleClose, show, post, match }) => {
         </Modal.Header>
         <Modal.Body>
           Please select a problem If someone is in immediate danger, get help
-          before reporting to Facebook. Don't wait.
-        </Modal.Body>
+          before reporting. Don't wait.
         <Form>
-          <table className="table">
-            <tbody>
               {" "}
-              <tr>
-                <th scope="col-8">Harassment</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Fake</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Physical harm</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Adult content</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Violance</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Smap</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-              <tr>
-                <th scope="col-8">Hate Speech</th>
-                <th scope="col-2" style={{ textAlign: "right" }}>
-                <input type="checkbox" value="" id="flexCheckDefault" />
-                </th>
-              </tr>
-            </tbody>
-          </table>
-
+              <select
+              style={{marginTop:'30px',marginBottom:'30px'}}
+                className="form-select col-12"
+                type="text"
+                name="checkbox"
+                onChange={handleChange}
+              >
+                <option value="">--</option>
+                <option value="Harassment">Harassment</option>
+                <option value="AdultContent">Adult Content</option>
+                <option value="HateSpeech">Hate Speech</option>
+                <option value="Spam">Spam</option>
+              </select>
           <Form.Group sm="2" m="2">
             <Form.Label as="h5">Something Else</Form.Label>
             <Form.Control
               as="textarea"
               rows={6}
               type="text"
-              placeholder="report"
+              placeholder="something else ..."
               name="body"
               onChange={handleChange}
             />
@@ -102,6 +69,7 @@ const Report = ({ handleClose, show, post, match }) => {
             Cancel
           </Button>
         </Form>
+        </Modal.Body>
       </Modal>
     </div>
   );

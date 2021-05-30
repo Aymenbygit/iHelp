@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  Button,
-  Container,
-  Row,
-  Col,
-  Spinner,
-  Form
-} from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import NewPost from "./NewPost";
 import {
@@ -23,11 +15,12 @@ import {
   searchByTitle,
 } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
+import Search from "./Search";
+import PostPagination from './PostPagination'
 
-const PostsList = ({ posts }) => {
+const PostsList = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
@@ -50,41 +43,17 @@ const PostsList = ({ posts }) => {
     }
     dispatch(getOps());
     dispatch(allUsers());
-  }, [AuthReducer.isAuth,dispatch]);
+  }, [AuthReducer.isAuth, dispatch]);
+
   return (
     <div>
-      <div>
-        <div className="search-title-div">
-          <Form onSubmit={searchNow} className="search-title-form">
-            <Form.Row>
-              <Col xs={7}>
-                <Form.Control
-                  type="text"
-                  name="title"
-                  onChange={handleChange}
-                  className="search-title-input"
-                  placeholder="Search by title..."
-                />
-              </Col>
-              <Button variant="secondary" className="search-btn" type="submit">
-                Search
-              </Button>
-            </Form.Row>
-          </Form>
-        </div>
-      </div>
       <NewPost handleClose={handleClose} show={show} />
-      {/* <Report handleClose={handleClose} show={show} post={PostList.map((eleee, i) => eleee._id)} /> */}
-
-      {/* <center style={{ margin: 20 }}>
-        <Button onClick={handleShow} variant="primary">
-          Ask Question!
-        </Button>
-      </center> */}
       <Container>
+        <Search />
         <h2 style={{ fontSize: 20 }}>{PostList.length} posts</h2>{" "}
       </Container>
-      {PostList ? (
+      <PostPagination/>
+      {/* {PostList ? (
         PostList.map((el, i) => (
           <Container key={i}>
             <Card>
@@ -97,7 +66,7 @@ const PostsList = ({ posts }) => {
                     <Col sm={1}>
                       {
                         <i
-                          style={{cursor:'pointer'}}
+                          style={{ cursor: "pointer" }}
                           className="fas fa-trash-alt"
                           onClick={() => {
                             dispatch(deleteOps(el._id));
@@ -113,15 +82,9 @@ const PostsList = ({ posts }) => {
               <Row>
                 <Col className="col-lg-2" style={{ textAlign: "center" }}>
                   <Card.Body>
-                    <Card.Text
-                      onClick={handleShow}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {" "}
-                      <Link to={`/posts/${el._id}`} style={{ color: "blue" }} >
-                        <i className="fas fa-exclamation-triangle"></i> report
-                        this
-                      </Link>
+                    <Card.Text style={{ cursor: "pointer", color: "blue" }}>
+                      <i className="fas fa-exclamation-triangle"></i> Report
+                      this post
                     </Card.Text>
                     <Card.Text>
                       {el.comments.length} <span>comments</span>{" "}
@@ -129,39 +92,42 @@ const PostsList = ({ posts }) => {
                     <Card.Text></Card.Text>
                     <Card.Text>
                       {AuthReducer.user ? (
-                        AuthReducer.user.favorites &&
-                        <i
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            if (
-                              AuthReducer.user.favorites
-                                .map((ela) => ela._id)
-                                .includes(el._id) === false
-                            ) {
-                              dispatch(
-                                addFav(AuthReducer.user._id, { _id: el._id })
-                              );
-                            } else {
-                              dispatch(
-                                removeFav(AuthReducer.user._id, { _id: el._id })
-                              );
-                            }
-                          }}
-                        >
-                          {AuthReducer.user.favorites
-                            .map((ela) => ela._id)
-                            .includes(el._id) === false ? (
-                            <i
-                              style={{ cursor: "pointer" }}
-                              className="far fa-bookmark fa-2x"
-                            ></i>
-                          ) : (
-                            <i
-                              style={{ cursor: "pointer", color: "red" }}
-                              className="fas fa-bookmark fa-2x"
-                            ></i>
-                          )}{" "}
-                        </i>
+                        AuthReducer.user.favorites && (
+                          <i
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              if (
+                                AuthReducer.user.favorites
+                                  .map((ela) => ela._id)
+                                  .includes(el._id) === false
+                              ) {
+                                dispatch(
+                                  addFav(AuthReducer.user._id, { _id: el._id })
+                                );
+                              } else {
+                                dispatch(
+                                  removeFav(AuthReducer.user._id, {
+                                    _id: el._id,
+                                  })
+                                );
+                              }
+                            }}
+                          >
+                            {AuthReducer.user.favorites
+                              .map((ela) => ela._id)
+                              .includes(el._id) === false ? (
+                              <i
+                                style={{ cursor: "pointer" }}
+                                className="far fa-bookmark fa-2x"
+                              ></i>
+                            ) : (
+                              <i
+                                style={{ cursor: "pointer", color: "red" }}
+                                className="fas fa-bookmark fa-2x"
+                              ></i>
+                            )}{" "}
+                          </i>
+                        )
                       ) : (
                         <Link to="/login" style={{ color: "black" }}>
                           {" "}
@@ -204,10 +170,12 @@ const PostsList = ({ posts }) => {
                 {new Date(el.created_at).toLocaleString()} || asked by{" "}
                 {UserReducer &&
                   UserReducer.filter((user) => user._id === el.owner).map(
-                    (ww, i) => <Link to={`/user/${ww._id}`} key={i}><i key={i}>{ww.username}</i></Link>
-                  )}
-                  
-                  {" "}
+                    (ww, i) => (
+                      <Link to={`/user/${ww._id}`} key={i}>
+                        <i key={i}>{ww.username}</i>
+                      </Link>
+                    )
+                  )}{" "}
               </Card.Footer>
             </Card>
             <hr />
@@ -217,7 +185,7 @@ const PostsList = ({ posts }) => {
         <div className="spinner-div">
           <Spinner animation="border" variant="primary" />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

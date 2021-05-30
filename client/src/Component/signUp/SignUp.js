@@ -39,7 +39,7 @@ const SignUp = ({ history }) => {
       <br />
       <Container>
         <Row className="justify-content-md-center">
-          <Col  className="log_card col-md-5">
+          <Col  className="log_card col-lg-5">
             {" "}
             <Form onSubmit={registerNow}>
               <Form.Group style={{ textAlign: "center" }}>

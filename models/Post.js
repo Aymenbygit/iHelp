@@ -1,4 +1,5 @@
 const mongoose = require('mongoose') 
+const { v4: uuidv4 } = require('uuid');
 
 const PostSchema = mongoose.Schema ({
     owner : {
@@ -7,6 +8,7 @@ const PostSchema = mongoose.Schema ({
     }, 
     title : String , 
     description : String ,
+    gallery : Array, 
     comments : {
         type : Array ,
         default:[]

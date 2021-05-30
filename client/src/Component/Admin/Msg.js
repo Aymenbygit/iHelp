@@ -31,12 +31,12 @@ const Msg = (props) => {
           (msg, i) => (
             <Card key={i} style={{ margin: 25 }}>
               <Card.Body>
-                <Card.Title>Name : {msg.name}</Card.Title>
+                <Card.Title>Subject : {msg.subject}</Card.Title>
               </Card.Body>
               <ListGroup className="list-group-flush">
-                <ListGroupItem>Email : {msg.email}</ListGroupItem>
-                <ListGroupItem>Subject : {msg.subject}</ListGroupItem>
                 <ListGroupItem>Body : {msg.body}</ListGroupItem>
+                <ListGroupItem>name : {msg.name}</ListGroupItem>
+                <ListGroupItem>Email : {msg.email}</ListGroupItem>
               </ListGroup>
             </Card>
           )

@@ -1,33 +1,39 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Form } from "react-bootstrap";
 import { addCom } from "../../redux/action/postAction";
 import { getOps } from "../../redux/action/postAction";
+import { Link } from "react-router-dom";
 
-const Comment = ({ postli}) => {
+const Comment = ({ postli }) => {
+  const AuthReducer = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   const [post, setPost] = useState({
     body: "",
   });
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPost({
+      ...post,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleAdd = (e) => {
-    if(post.body!==''){e.preventDefault();
-    dispatch(addCom(postli, post));
-    setPost({
-      body: "",
-    })
-    dispatch(getOps());
-  }else{
-      alert('your comments is empty!')
+    if (post.body !== "") {
+      e.preventDefault();
+      dispatch(addCom(postli, post));
+      setPost({
+        body: "",
+      });
+      dispatch(getOps());
+    } else {
+      alert("your comments is empty!");
     }
   };
   return (
     <div>
       <Container>
-        Comments
+        Comments{" "}
         <Form.Group>
           <Form.Control
             as="textarea"
@@ -38,12 +44,16 @@ const Comment = ({ postli}) => {
             name="body"
             onChange={handleChange}
             value={post.body}
-          />
-        </Form.Group>
-        <Button onClick={handleAdd}>
-          Add a comment
-        </Button>
-      </Container>
+          />{" "}
+        </Form.Group>{" "}
+        {AuthReducer.isAuth ? (
+          <Button onClick={handleAdd}> Add a comment </Button>
+        ) : (
+          <Link to="/login">
+            <Button>Add a comment</Button>
+          </Link>
+        )}
+      </Container>{" "}
     </div>
   );
 };

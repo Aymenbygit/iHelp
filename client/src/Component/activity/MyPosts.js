@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AcitivityLayout from "./AcitivityLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,11 +17,15 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import NewPost from "../post/NewPost";
 
 const MyPosts = () => {
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const UserReducer = useSelector((state) => state.UserReducer);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const dispatch = useDispatch();
   useEffect(() => {
     if (AuthReducer.isAuth) {
@@ -34,14 +38,21 @@ const MyPosts = () => {
   return (
     <div>
       <AcitivityLayout>
-        {PostList &&
+      <NewPost/>
+      {AuthReducer.user && PostList &&  PostList.filter((ell) => ell.owner === AuthReducer.user._id).length === 0 &&
+      <Container>
+        <h4 style={{paddingTop:'20px'}}>No Posts Yet</h4>
+      </Container>
+      
+      }
+        {AuthReducer.user && PostList &&
           PostList.filter((ell) => ell.owner === AuthReducer.user._id).map(
             (post, i) => (
-              <Container key={i}>
-                <Card>
+              <Container key={i}  style={{paddingTop:'20px'}}>
+                <Card >
                   <Card.Header as="h5">
                     <Row>
-                      <Col sm={11}>{post.title}</Col>
+                      <Col sm={10}>{post.title}</Col>
                       <Col sm={1}>
                         {
                           <DropdownButton

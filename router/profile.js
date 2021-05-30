@@ -7,29 +7,40 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const secret_key = process.env.SECRET_KEY;
 const authMiddleware = require("../helpers/authMiddleware");
+const multer = require('multer')
+
+//upload image 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+ 
+var upload = multer({ storage: storage })
 
 // PUT : EDIT A USER BY ID
-router.put( "/:id",
-[
-  body("first_name", "FirstName must contain only alphabetic and not empty")
-    .isString()
-    .isLength({
-      min: 2,
-    }),
-  body("last_name", "LastName must contain only alphabetic and not empty")
-    .isString()
-    .isLength({
-      min: 2,
-    }),
-],
+router.put( "/:id",[authMiddleware, upload.single('avatar')] ,
   (req, res) => {
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    User.findByIdAndUpdate({_id:req.params.id},{...req.body},(err,msg)=> {
+    if (req.file) {
+      let path = req.protocol + "://" + req.hostname + ":" + 4000 + "/uploads/" + req.file.filename ;
+      let myBody = JSON.parse(req.body.info)
+    User.findByIdAndUpdate({_id:req.params.id},{...myBody, avatar: path},(err,msg)=> {
         err ? console.log(err) : res.json({msg:'user was updated'})
-    })
+    })}
+    else {
+      let myBody = JSON.parse(req.body.info)
+      User.findByIdAndUpdate({_id:req.params.id},{$set:{...myBody}},(err,msg)=> {
+      err ? console.log(err) : res.json({msg:'user was updated'})
+   
+  })}
   }
 );
 //delete user by id

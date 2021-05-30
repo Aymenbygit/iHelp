@@ -25,12 +25,13 @@ const Header = ({ search }) => {
     return (
       <div>
         <Navbar
-          style={{ backgroundColor: "#D4F1F4" }}
+          style={{ backgroundColor: "#D4F1F4",paddingBottom:"20px",paddingTop:"9px"  }}
           expand="lg"
           className="header__"
         >
           <Navbar.Brand>
-            <i className="user_name">public</i>
+            {/* <img src={Logo} id="logo_" /> */}
+            <i className="user_name">iHelp</i>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -84,14 +85,13 @@ const Header = ({ search }) => {
     return (
       <div>
         <Navbar
-          style={{ backgroundColor: "#D4F1F4" }}
+          style={{ backgroundColor: "#D4F1F4"}}
           expand="lg"
-          className="header__"
+          className="header__ "
         >
-          <Navbar.Brand>
-            <i className="user_name">
-              login as,{AuthReducer && AuthReducer.user.username}
-            </i>
+          <Navbar.Brand  style={{paddingRight: '80px'}}>
+            <div className="chip"> <img  src={AuthReducer.user.avatar} alt=""/>
+              {AuthReducer && AuthReducer.user.username}</div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -167,10 +167,9 @@ const Header = ({ search }) => {
           expand="lg"
           className="header__"
         >
-          <Navbar.Brand>
-            <i className="user_name">
-              login as,{AuthReducer && AuthReducer.user.username}
-            </i>
+          <Navbar.Brand >
+            <div className="chip"> <img  src={AuthReducer.user.avatar} alt=""/>
+              {AuthReducer && AuthReducer.user.username}</div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

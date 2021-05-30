@@ -27,10 +27,13 @@ const Messages = () => {
     <div>
       <div className="site-section">
         <div className="container">
-          <h1 className="text-uppercase" style={{ textAlign: "center",paddingTop:20 }}>
+          <h1
+            className="text-uppercase"
+            style={{ textAlign: "center", paddingTop:38 }}
+          >
             CONTACT US
           </h1>
-          <hr />
+          <hr style={{padding:40}} />
           <div className="row">
             <div className="col-lg-7">
               <form>
@@ -79,7 +82,7 @@ const Messages = () => {
                   <input
                     type="submit"
                     className="btn py-3 px-5"
-                    style={{backgroundColor:"#6ECBA4",color:'white'}}
+                    style={{ backgroundColor: "#6ECBA4", color: "white" }}
                     value="Send Message"
                     onClick={handleAddMessage}
                   />
@@ -89,18 +92,30 @@ const Messages = () => {
             <div className="col-lg-4 ml-auto">
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <strong className="text-white d-block">Address</strong>
-                  4013, Messadine <br /> Msaken,Sousse
+                  <i className="fas fa-home me-3"></i> Address
+                  <p>
+                    4013, Messadine <br /> Msaken,Sousse
+                  </p>
                 </li>
                 <li className="mb-2">
-                  <strong className="text-white d-block">Email</strong>
-                  <a href="mailto:fcmessadine@gmail.com" style={{color:'black'}}>
-                    aymenby2503@gmail.com
-                  </a>
+                  <i className="fas fa-envelope me-3"></i> Email
+                  <p>
+                    {" "}
+                    <a
+                      href="mailto:fcmessadine@gmail.com"
+                      style={{ color: "black" }}
+                    >
+                      aymenby2503@gmail.com
+                    </a>
+                  </p>
                 </li>
                 <li className="mb-2">
-                  <strong className="text-white d-block">Phone</strong>
-                  <a href="tel:26 398 196"  style={{color:'black'}}>26 398 196</a>
+                  <i className="fas fa-phone me-3"></i> Phone
+                  <p>
+                    <a href="tel:26 398 196" style={{ color: "black" }}>
+                      26 398 196
+                    </a>
+                  </p>
                 </li>
               </ul>
             </div>

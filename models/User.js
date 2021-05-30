@@ -5,6 +5,10 @@ const userSchema = mongoose.Schema({
   last_name: String,
   username: String,
   email: String,
+  avatar: {
+    type: String,
+    default: "https://oasys.ch/wp-content/uploads/2019/03/photo-avatar-profil.png",
+  },
   type: {
     type: Boolean,
     default: false,

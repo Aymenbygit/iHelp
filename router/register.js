@@ -22,7 +22,7 @@ router.post(
       .isLength({
         min: 2,
       }),
-    body("username", "Ivalid username").isString().isLength({
+    body("username", "Invalid username").isString().isLength({
       min: 3,
     }),
     body("email", "Please enter a valid Email").isEmail(),

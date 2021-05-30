@@ -10,7 +10,8 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
   ADD_FAV_SUCCESS,
-  REMOVE_FAV_SUCCESS
+  REMOVE_FAV_SUCCESS,
+  EDIT_FAIL
 } from "../action/type";
 let initialState = {
   token: localStorage.getItem("token"),
@@ -26,7 +27,12 @@ const AuthReducer = (state = initialState, action) => {
     case EDIT_SUCCESS:
       return {
         ...state,
-        errors : null, 
+        error : null, 
+      };
+    case EDIT_FAIL:
+      return {
+        ...state,
+        error : action.payload, 
       };
 
     case ADD_FAV_SUCCESS: 
@@ -56,7 +62,7 @@ const AuthReducer = (state = initialState, action) => {
         localStorage.removeItem("token");
       localStorage.removeItem("isAuth");
       return {
-        isAuth: false,
+        isAuth: null,
         error: null,
         user: null,
       };
@@ -66,14 +72,14 @@ const AuthReducer = (state = initialState, action) => {
       localStorage.removeItem("isAuth");
       return {
         ...state,
-        isAuth: false,
+        isAuth: null,
         error: action.payload,
       };
     case LOGOUT:
       localStorage.removeItem("token");
       localStorage.removeItem("isAuth");
       return {
-        isAuth: false,
+        isAuth: null,
         error: null,
         user: null,
       };
