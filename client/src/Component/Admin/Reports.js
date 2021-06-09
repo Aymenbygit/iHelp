@@ -79,7 +79,7 @@ const Reports = ({ filter, toggle }) => {
                         )
                       )}
                   </Card.Title>
-                  <Card.Text>{el.checkbox}</Card.Text>
+                  <Card.Text><b>{el.checkbox}</b> </Card.Text>
                   <Card.Text>{el.body}</Card.Text>
                   <Card.Text>
                     {new Date(el.created_at).toLocaleString()}

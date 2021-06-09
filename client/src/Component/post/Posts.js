@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFav,
@@ -11,6 +11,9 @@ import { deleteOps, getOps, getOpsbyId } from "../../redux/action/postAction";
 import Comment from "../comment/Comment";
 import { Link } from "react-router-dom";
 import Report from "./Report";
+import TRA from "../../Resource/imgs/needHelp.jpg";
+import TRAA from "../../Resource/imgs/math.jpg";
+import TRAAA from "../../Resource/imgs/curly-bracket.jpg";
 
 const Posts = (props) => {
   const [show, setShow] = useState(false);
@@ -20,16 +23,23 @@ const Posts = (props) => {
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const UserReducer = useSelector((state) => state.UserReducer);
+  const OnePost = useSelector((state) => state.OnePost);
+
+  const [index, setIndex] = useState(0);
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
 
   useEffect(() => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
       dispatch(getOps());
+      dispatch(getOpsbyId(props.match.params.id));
     }
     dispatch(getOps());
     dispatch(allUsers());
     dispatch(getOpsbyId(props.match.params.id));
-  }, [AuthReducer.isAuth,dispatch,props.match.params.id]);
+  }, [AuthReducer.isAuth, dispatch, props.match.params.id]);
 
   return (
     <div style={{ marginTop: 30 }}>
@@ -45,7 +55,6 @@ const Posts = (props) => {
         PostList.filter((ell) => ell._id === props.match.params.id).map(
           (post, i) => (
             <Container key={i}>
-              
               <Card>
                 <Card.Header as="h5">
                   <Row>
@@ -55,15 +64,13 @@ const Posts = (props) => {
                     AuthReducer.user.type === true ? (
                       <Col sm={1}>
                         {
-                          
-                            <i
-                              className="fas fa-trash-alt"
-                              onClick={() => {
-                                dispatch(deleteOps(post._id));
-                                window.history.back();
-                              }}
-                            ></i>
-                          
+                          <i
+                            className="fas fa-trash-alt"
+                            onClick={() => {
+                              dispatch(deleteOps(post._id));
+                              window.history.back();
+                            }}
+                          ></i>
                         }
                       </Col>
                     ) : (
@@ -88,26 +95,25 @@ const Posts = (props) => {
                           <i
                             style={{ cursor: "pointer" }}
                             onClick={() => {
-                              if(AuthReducer.user){
+                              if (AuthReducer.user) {
                                 if (
-                                AuthReducer.user.favorites
-                                  .map((ela) => ela._id)
-                                  .includes(post._id) === false
-                              ) {
-                                dispatch(
-                                  addFav(AuthReducer.user._id, {
-                                    _id: post._id,
-                                  })
-                                );
-                              } else {
-                                dispatch(
-                                  removeFav(AuthReducer.user._id, {
-                                    _id: post._id,
-                                  })
-                                );
+                                  AuthReducer.user.favorites
+                                    .map((ela) => ela._id)
+                                    .includes(post._id) === false
+                                ) {
+                                  dispatch(
+                                    addFav(AuthReducer.user._id, {
+                                      _id: post._id,
+                                    })
+                                  );
+                                } else {
+                                  dispatch(
+                                    removeFav(AuthReducer.user._id, {
+                                      _id: post._id,
+                                    })
+                                  );
+                                }
                               }
-                              }
-                              
                             }}
                           >
                             {AuthReducer.user.favorites
@@ -141,16 +147,26 @@ const Posts = (props) => {
                   <Col className="col-lg-10">
                     <Card.Body>
                       <Card.Text>{post.description}</Card.Text>
-                      {post.gallery.map((el,i)=><img key={i} src={el} alt="Image" className="img_post"/>)}
+                      {/* {post.gallery.map((el, i) => (
+                        <img
+                          key={i}
+                          src={el}
+                          alt="Image"
+                          className="img_post"
+                        />
+                      ))} */}
                     </Card.Body>
                   </Col>
                 </Row>
                 <Card.Footer className="text-muted">
                   2 minutes ago || asked by{" "}
-                  
                   {UserReducer &&
                     UserReducer.filter((user) => user._id === post.owner).map(
-                      (xx, i) => <Link to={`/user/${xx._id}`} key={i}><i key={i}>{xx.username}</i></Link>  
+                      (xx, i) => (
+                        <Link to={`/user/${xx._id}`} key={i}>
+                          <i key={i}>{xx.username}</i>
+                        </Link>
+                      )
                     )}{" "}
                 </Card.Footer>
               </Card>
@@ -180,17 +196,41 @@ const Posts = (props) => {
             </Container>
           )
         )}
+      {OnePost && OnePost.gallery && OnePost.gallery.length > 0 && (
+        <Container>
+        <Carousel activeIndex={index} onSelect={handleSelect} interval={10000000}>
+          {OnePost.gallery.map((el, i) => (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                key={i}
+                src={el}
+                alt="Image"
+                className="img_post"
+              />
+              {/* <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </Carousel.Caption> */}
+            </Carousel.Item>
+          ))}
+        </Carousel>
+        </Container>
+      )}
+
       <Comment
         postli={PostList.filter((la) => la._id === props.match.params.id).map(
           (eleee, i) => eleee._id
-        )}/>
-        {/* {!SavedPost &&  <Notfound/>}
+        )}
+      />
+      {/* {!SavedPost &&  <Notfound/>}
         {SavedPost &&  <Comment
         postli={PostList.filter((la) => la._id === props.match.params.id).map(
           (eleee, i) => eleee._id
         )}
       />} */}
-      
     </div>
   );
 };

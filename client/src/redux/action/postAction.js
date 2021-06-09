@@ -45,20 +45,20 @@ export const getMyCom = () => (dispatch) => {
 };
 
 export const addPost = (info, files) => (dispatch) => {
-  let filesArray = Object.values(files)
-  let formData = new FormData()
-  filesArray.map((file)=>formData.append('gallery', file));
-    formData.append("info", JSON.stringify(info))
-    formData.append("gallery", filesArray)
+  let filesArray = Object.values(files);
+  let formData = new FormData();
+  filesArray.map((file) => formData.append("gallery", file));
+  formData.append("info", JSON.stringify(info));
+  formData.append("gallery", filesArray);
   axios
     .post("/post/newPosts", formData)
-    .then((res) =>{
+    .then((res) => {
       dispatch({
         type: ADD_POST_SUCCESS,
         payload: res.data,
-      })
-      dispatch(getOps())}
-    )
+      });
+      dispatch(getOps());
+    })
     .catch((err) =>
       dispatch({
         type: ADD_POST_FAIL,
@@ -66,7 +66,21 @@ export const addPost = (info, files) => (dispatch) => {
       })
     );
 };
+export const editPost = (_id, info, files) => async (dispatch) => {
+  let filesArray = Object.values(files);
+  let formData = new FormData();
+  filesArray.map((file) => formData.append("gallery", file));
+  formData.append("info", JSON.stringify(info));
+  formData.append("gallery", filesArray);
 
+  axios.put(`/post/update/${_id}`, formData).then((res) => {
+    dispatch({
+      type: SAVED_OP,
+      payload: res.data,
+    });
+    dispatch(getOps());
+  });
+};
 
 export const addOps = (infos) => (dispatch) => {
   axios
@@ -96,18 +110,6 @@ export const deleteOps = (id) => (dispatch) => {
   });
 };
 
-export const editPost = (_id, info) => async (dispatch) => {
-  setToken();
-  axios.put(`/post/update/${_id}`, info).then((res) =>{
-    dispatch({
-      type: SAVED_OP,
-      payload: res.data,
-    })
-    dispatch(getOps());
-  }
-  );
-  
-};
 export const savePost = (infos) => (dispatch) => {
   axios
     .get("/post", infos)
@@ -129,14 +131,13 @@ export const addCom = (_id, info) => (dispatch) => {
   setToken();
   axios
     .put(`/comment/add/${_id}`, info)
-    .then((res) =>{
+    .then((res) => {
       dispatch({
         type: ADD_COM_SUCCESS,
         payload: res.data,
-      })
-      dispatch(getOps())
-    }
-    )
+      });
+      dispatch(getOps());
+    })
     .catch((err) =>
       dispatch({
         type: ADD_COM_FAIL,
@@ -148,7 +149,7 @@ export const addCom = (_id, info) => (dispatch) => {
 //To Search post by title
 export const searchByTitle = (search) => (dispatch) => {
   axios
-    .get("post/search" ,{params:search})
+    .get("post/search", { params: search })
     .then((res) =>
       dispatch({
         type: SEARCH_BY_TITLE_SUCCESS,
@@ -163,12 +164,11 @@ export const searchByTitle = (search) => (dispatch) => {
     });
 };
 
-export const getAllPosts = (pageNumber ) => (dispatch) => {
+export const getAllPosts = (pageNumber) => (dispatch) => {
   axios.get(`/post/allpost/${pageNumber}`).then((res) =>
     dispatch({
       type: GET_OP_SUCCESS,
       payload: res.data,
     })
   );
-  
 };

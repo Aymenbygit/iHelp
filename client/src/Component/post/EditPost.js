@@ -7,6 +7,7 @@ const EditPost = (props) => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const SavedPost = useSelector((state) => state.SavedPost);
   const dispatch = useDispatch();
+  const [files, setFile] = useState([]);
   const [post, setPost] = useState({
     title: "",
     description: "",
@@ -14,12 +15,16 @@ const EditPost = (props) => {
   const handleEditPost = () => {
     if (AuthReducer.isAuth) {
       if (post.description !== "") {
-        dispatch(editPost(post._id, post));
+        dispatch(editPost(post._id, post,files));
       }
     }
   };
   const handleChange = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    if(e.target.name === "gallery"){
+      setFile(e.target.files)
+    } else {
+      setPost({ ...post, [e.target.name]: e.target.value });
+    }
   };
   useEffect(() => {
     if (AuthReducer.isAuth) {
@@ -33,6 +38,7 @@ const EditPost = (props) => {
       setPost({
         title: "",
         description: "",
+        gallery: "",
       });
     else setPost(SavedPost);
   }, [SavedPost]);
@@ -62,6 +68,15 @@ const EditPost = (props) => {
                 value={post.title}
               />
             </Form.Group>
+            <Form.Group>
+                  <Form.Label as="h5">Upload Images :</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="gallery"
+                    onChange={handleChange}
+                    multiple
+                  />
+                </Form.Group>
             <Form.Group>
               <Form.Label as="h5">Body</Form.Label>
               <Form.Control

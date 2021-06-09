@@ -158,14 +158,35 @@ router.delete("/:id", authMiddleware, (req, res) => {
 });
 
 //edit post by id
-router.put("/update/:id", authMiddleware, (req, res) => {
-  Post.findByIdAndUpdate({ _id: req.params.id }, { ...req.body })
-    .then((data) => res.json(data))
-    .catch((err) => {
-      console.error(err.message);
-      res.status(500).json({ msg: "Server Error" });
-    });
+router.put("/update/:id", [authMiddleware, upload.array("gallery", 10)], (req, res) => {
+
+  if (req.files) {
+    let filesList = req.files.map(
+      (file) =>
+        (path = `${req.protocol}://${req.hostname}:4000/uploads/${file.filename}`)
+    );
+    let myBody = JSON.parse(req.body.info);
+    Post.findByIdAndUpdate({ _id: req.params.id }, {
+      ...myBody,
+      owner: req.userId,
+      gallery: filesList,
+    })
+      .then((data) => res.json(data))
+      .catch((err) => {
+        console.error(err.message);
+        res.status(500).send({ msg: "Server Error" });
+      });
+  } else {
+    let myBody = JSON.parse(req.body.info);
+    Post.findByIdAndUpdate({ _id: req.params.id }, { ...myBody })
+      .then((data) => res.json(data))
+      .catch((err) => {
+        console.error(err.message);
+        res.status(500).send({ msg: "Server Error" });
+      });
+  }
 });
+
 
 //add report
 router.post("/report/new_report/:id", authMiddleware, (req, res) => {
@@ -223,30 +244,5 @@ router.get("/search", (req, res) => {
     });
 });
 
-// app.get("/users", paginatedResults(), (req, res) => {
-//   res.json(res.paginatedResults);
-// });
-
-// function paginatedResults() {
-//   return async (req, res, next) => {
-
-//     const page = parseInt(req.query.page);
-//     const limit = parseInt(req.query.limit);
-//     const skipIndex = (page - 1) * limit;
-//     const results = {};
-
-//     try {
-//       results.results = await User.find()
-//         .sort({ _id: 1 })
-//         .limit(limit)
-//         .skip(skipIndex)
-//         .exec();
-//       res.paginatedResults = results;
-//       next();
-//     } catch (e) {
-//       res.status(500).json({ message: "Error Occured" });
-//     }
-//   };
-// }
 
 module.exports = router;

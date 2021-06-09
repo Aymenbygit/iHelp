@@ -110,7 +110,6 @@ const SavedPosts = (props) => {
                         </Col>
                         <Col className="col-sm-10">
                           <Card.Body>
-                            <Card.Title>Special title treatment</Card.Title>
                             <Card.Text>
                               {post.description.length > 150
                                 ? post.description.slice(0, 150) + "... "

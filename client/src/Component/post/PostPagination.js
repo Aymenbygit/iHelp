@@ -106,7 +106,6 @@ const Table = () => {
                 <Card.Text>
                   {el.comments.length} <span>comments</span>{" "}
                 </Card.Text>
-                <Card.Text></Card.Text>
                 <Card.Text>
                   {AuthReducer.user ? (
                     AuthReducer.user.favorites && (
@@ -161,6 +160,7 @@ const Table = () => {
             </Col>
             <Col className="col-sm-10">
               <Card.Body>
+                <Card.Title> {el.gallery.length} <i class="fas fa-paperclip"></i> attachment</Card.Title>
                 <Card.Text>
                   {el.description.length > 150
                     ? el.description.slice(0, 150) + "... "

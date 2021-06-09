@@ -261,7 +261,8 @@ body {
   background-color: #e3f0ef !important;
 }
 .img_post{
-  width: 60px;
+  width: 100%;
+  align-items: center;
 }
 
 .user__card {

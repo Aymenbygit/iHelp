@@ -33,23 +33,26 @@ const MyPosts = () => {
       dispatch(allUsers());
       dispatch(getOps());
     }
-  }, [AuthReducer.isAuth,dispatch]);
+  }, [AuthReducer.isAuth, dispatch]);
 
   return (
     <div>
       <AcitivityLayout>
-      <NewPost/>
-      {AuthReducer.user && PostList &&  PostList.filter((ell) => ell.owner === AuthReducer.user._id).length === 0 &&
-      <Container>
-        <h4 style={{paddingTop:'20px'}}>No Posts Yet</h4>
-      </Container>
-      
-      }
-        {AuthReducer.user && PostList &&
+        <NewPost />
+        {AuthReducer.user &&
+          PostList &&
+          PostList.filter((ell) => ell.owner === AuthReducer.user._id)
+            .length === 0 && (
+            <Container>
+              <h4 style={{ paddingTop: "20px" }}>No Posts Yet</h4>
+            </Container>
+          )}
+        {AuthReducer.user &&
+          PostList &&
           PostList.filter((ell) => ell.owner === AuthReducer.user._id).map(
             (post, i) => (
-              <Container key={i}  style={{paddingTop:'20px'}}>
-                <Card >
+              <Container key={i} style={{ paddingTop: "20px" }}>
+                <Card>
                   <Card.Header as="h5">
                     <Row>
                       <Col sm={10}>{post.title}</Col>
@@ -69,7 +72,15 @@ const MyPosts = () => {
                               Delete
                             </Dropdown.Item>
                             <Dropdown.Item>
-                              <Link onClick={()=>{dispatch(getOpsbyId(post._id))}} to={`/edit_post/${post._id}`} style={{ color: "black" }}>Edit</Link>
+                              <Link
+                                onClick={() => {
+                                  dispatch(getOpsbyId(post._id));
+                                }}
+                                to={`/edit_post/${post._id}`}
+                                style={{ color: "black" }}
+                              >
+                                Edit
+                              </Link>
                             </Dropdown.Item>
                           </DropdownButton>
                         }
@@ -77,7 +88,7 @@ const MyPosts = () => {
                     </Row>
                   </Card.Header>
                   <Row>
-                    <Col className="col-sm-2" style={{ textAlign: "center" }}>
+                    <Col className="col-md-2" style={{ textAlign: "center" }}>
                       <Card.Body>
                         <Card.Text>
                           {AuthReducer.isAuth ? (
@@ -134,7 +145,7 @@ const MyPosts = () => {
                     </Col>
                     <Col className="col-sm-10">
                       <Card.Body>
-                        <Card.Title>Special title treatment</Card.Title>
+                <Card.Title> {post.gallery.length} <i class="fas fa-paperclip"></i> attachment</Card.Title>
                         <Card.Text>
                           {" "}
                           {post.description.length > 150
