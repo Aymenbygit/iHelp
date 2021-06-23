@@ -14,46 +14,41 @@ const About = () => {
         <div className="row">
           <div className="col-md-6">
             <b>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-              Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
-              Praesent mauris.
+              An initiative to establish the values of cooperation and
+              volunteering and to link the provider of assistance with a request
+              for it to either mention and record an experience, offer an expert
+              training course, or provide a free opportunity for the applicant
+              depending on the field of the bidder. It's your answer to the
+              question.
             </b>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-            odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
-            quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent
-            mauris. Fusce nec tellus sed augue semper porta.{" "}
-            <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>.
-            Mauris massa. Vestibulum lacinia arcu eget nulla.
+            The primary objective is to assist and spread the spirit of giving
+            and volunteering and to share experience and knowledge.
           </div>
         </div>
         <img src={about} style={{ width: "80%" }} alt="" />
         <div className="row">
           <div className="col-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-            odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
-            quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent
-            mauris. Fusce nec tellus sed augue semper porta.{" "}
-            <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>.
-            Mauris massa. Vestibulum lacinia arcu eget nulla.
+            <b>
+              {" "}
+              We believe that sharing expertise and experience creates a
+              coherent and strong society.
+            </b>
           </div>
           <div className="col-4" style={{ marginTop: "-60px" }}>
             <Card style={{ backgroundColor: "#EC563D" }}>
               <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Card Subtitle
+                <Card.Title>iHELP</Card.Title>
+                <Card.Subtitle className="mb-2">
+                  aymenby2503@gmail.com
                 </Card.Subtitle>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
-                <Card.Link as={Link} to="/contactus">
-                  Contact Us
+                <Card.Text>4013, Messadine Msaken,Sousse</Card.Text>
+                <Card.Text>26 398 196</Card.Text>
+                <Card.Link as={Link} to="/contactus" style={{color:'black'}} >
+                <i class="fas fa-arrow-circle-right"></i> Contact Us
                 </Card.Link>
               </Card.Body>
             </Card>

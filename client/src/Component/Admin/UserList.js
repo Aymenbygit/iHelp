@@ -12,7 +12,7 @@ import {
   removeFav,
 } from "../../redux/action/authAction";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 
 const UserList = ({ search, users }) => {
   const dispatch = useDispatch();
@@ -22,14 +22,14 @@ const UserList = ({ search, users }) => {
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [collection, setCollection] = useState(
-    cloneDeep(UserReducer && UserReducer.slice(0, countPerPage))
+    cloneDeep(users && users.slice(0, countPerPage))
   );
   const searchData = useRef(
     throttle((val) => {
       const query = val.toLowerCase();
       setCurrentPage(1);
       const data = cloneDeep(
-        UserReducer.filter(
+        users.filter(
           (item) => item.description.toLowerCase().indexOf(query) > -1
         ).slice(0, countPerPage)
       );
@@ -51,13 +51,13 @@ const UserList = ({ search, users }) => {
     } else {
       searchData.current(value);
     }
-  }, [value, dispatch, UserReducer]);
+  }, [value, dispatch, users]);
 
   const updatePage = (p) => {
     setCurrentPage(p);
     const to = countPerPage * p;
     const from = to - countPerPage;
-    setCollection(cloneDeep(UserReducer && UserReducer.slice(from, to)));
+    setCollection(cloneDeep(users && users.slice(from, to)));
   };
 
   const scrollToTop = () => {
@@ -118,6 +118,19 @@ const UserList = ({ search, users }) => {
       ></div>
       <div className="msg_right">
         <Container>
+        <Form  className="search-title-form" style={{paddingTop:30,paddingLeft:30}}>
+          <Form.Row>
+            <Col xs={7}>
+              <Form.Control
+                type="text"
+                name="title"
+                onChange={(e) => search(e.target.value)}
+                className="search-title-input"
+                placeholder="Search user..."
+              />
+            </Col>
+          </Form.Row>
+        </Form>
           <div className="row">{collection && tableData()}</div>
           <nav>
             <ul className="pagination justify-content-center">
@@ -126,7 +139,7 @@ const UserList = ({ search, users }) => {
                 pageSize={countPerPage}
                 onChange={updatePage}
                 current={currentPage}
-                total={UserReducer && UserReducer.length}
+                total={users && users.length}
                 onClick={scrollToTop()}
               />
             </ul>

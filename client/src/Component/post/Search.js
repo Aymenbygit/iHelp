@@ -42,7 +42,6 @@ const Search = () => {
           </Form.Row>
         </Form>
       </div>
-      {/* <PostsList PostList={PostList} /> */}
     </div>
   );
 };

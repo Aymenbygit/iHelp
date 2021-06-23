@@ -124,7 +124,6 @@ const Table = () => {
 
   return (
     <>
-
       <nav>
         <ul className="pagination justify-content-center">
           <Pagination

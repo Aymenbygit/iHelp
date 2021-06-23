@@ -12,30 +12,34 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logoutUser } from "../../redux/action/authAction";
 
-const Header = ({ search }) => {
+const Header = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   useEffect(() => {
     if (AuthReducer.isAuth) {
       dispatch(loadUser());
     }
-  }, [AuthReducer.isAuth,dispatch]);
+  }, [AuthReducer.isAuth, dispatch]);
 
   if (!AuthReducer.user) {
     return (
       <div>
         <Navbar
-          style={{ backgroundColor: "#D4F1F4",paddingBottom:"20px",paddingTop:"9px"  }}
+          style={{
+            backgroundColor: "#D4F1F4",
+            paddingBottom: "15px",
+            paddingTop: "15px",
+          }}
           expand="lg"
           className="header__"
         >
           <Navbar.Brand>
             {/* <img src={Logo} id="logo_" /> */}
-            <i className="user_name">iHelp</i>
+            <span className="user_name">iHELP</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav className="mr-auto nav_font">
               <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
@@ -48,7 +52,7 @@ const Header = ({ search }) => {
               <Nav.Link as={Link} to="/contactUs">
                 Contact
               </Nav.Link>
-              
+
               <NavDropdown title="Help">
                 <NavDropdown.Item as={Link} to="/helpcenter">
                   Help center
@@ -58,23 +62,17 @@ const Header = ({ search }) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form inline>
-              <InputGroup className="mr-sm-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <i className="fas fa-search"></i>
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
-              </InputGroup>
-            </Form>
 
             <Form inline>
               <Link to="/login" className="navTab" style={{ paddingRight: 6 }}>
-                <Button variant="primary">Sign in</Button>
+                <Button variant='outline'>
+                  <i className="fas fa-sign-in-alt"></i> Sign in
+                </Button>
               </Link>
-              <Link to="/register">
-                <Button variant="outline-primary">Sign Up</Button>
+              <Link to="/register" className="navTab">
+                <Button variant='outline'>
+                  <i className="fas fa-user"></i> Sign Up
+                </Button>
               </Link>
             </Form>
           </Navbar.Collapse>
@@ -85,17 +83,21 @@ const Header = ({ search }) => {
     return (
       <div>
         <Navbar
-          style={{ backgroundColor: "#D4F1F4"}}
+          style={{
+            backgroundColor: "#D4F1F4",
+            paddingBottom: "12px",
+            paddingTop: "12px",
+          }}
           expand="lg"
           className="header__ "
         >
-          <Navbar.Brand  style={{paddingRight: '80px'}}>
-            <div className="chip"> <img  src={AuthReducer.user.avatar} alt=""/>
-              {AuthReducer && AuthReducer.user.username}</div>
+          <Navbar.Brand>
+            {/* <img src={Logo} id="logo_" /> */}
+            <span className="user_name">iHELP</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav className="mr-auto nav_font">
               <Nav.Link as={Link} to="/posts">
                 Posts
               </Nav.Link>
@@ -125,35 +127,25 @@ const Header = ({ search }) => {
                 Contact
               </Nav.Link>
             </Nav>
-            <Form inline>
-              <InputGroup className="mr-sm-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <i className="fas fa-search"></i>
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
-              </InputGroup>
-            </Form>
-
-            <Form inline>
-              {AuthReducer.isAuth ? (
-                <>
-                  <Button
-                    onClick={() => {
-                      dispatch(logoutUser());
-                    }}
-                    variant="primary"
-                  >
-                    <i className="fas fa-sign-out-alt"></i>Log out
-                  </Button>
-                </>
-              ) : (
-                <Link to="/login" className="nav-link navTab">
-                  <Button variant="primary">Sign in</Button>
-                </Link>
-              )}
-            </Form>
+            <>
+              <img
+                className="chip__img"
+                src={AuthReducer.user.avatar}
+                alt="avatar"
+              />
+              <i className="nav_font">
+                {AuthReducer && AuthReducer.user.username}
+              </i>
+            </>
+            <NavDropdown style={{ paddingRight: "102px" }}>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
+              >
+                <i className="fas fa-sign-out-alt"></i>Log out
+              </NavDropdown.Item>
+            </NavDropdown>
           </Navbar.Collapse>
         </Navbar>
       </div>
@@ -163,17 +155,21 @@ const Header = ({ search }) => {
     return (
       <div>
         <Navbar
-          style={{ backgroundColor: "#D4F1F4" }}
+          style={{
+            backgroundColor: "#D4F1F4",
+            paddingBottom: "12px",
+            paddingTop: "12px",
+          }}
           expand="lg"
           className="header__"
         >
-          <Navbar.Brand >
-            <div className="chip"> <img  src={AuthReducer.user.avatar} alt=""/>
-              {AuthReducer && AuthReducer.user.username}</div>
+          <Navbar.Brand>
+            {/* <img src={Logo} id="logo_" /> */}
+            <span className="user_name">iHELP</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav className="mr-auto nav_font">
               <Nav.Link as={Link} to="/posts">
                 Posts
               </Nav.Link>
@@ -187,38 +183,33 @@ const Header = ({ search }) => {
                 Messages
               </Nav.Link>
               <NavDropdown title="Profile">
-                <NavDropdown.Item as={Link} to="/profile/user/personal_information">
+                <NavDropdown.Item
+                  as={Link}
+                  to="/profile/user/personal_information"
+                >
                   My Profile
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form inline>
-              <InputGroup className="mr-sm-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>
-                    <i className="fas fa-search"></i>
-                  </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl placeholder="Search" onChange={(e) => search(e.target.value)} type="text"/>
-              </InputGroup>
-            </Form>
-
-            <Form inline>
-              {AuthReducer.isAuth ? (
-                <Button
-                  onClick={() => {
-                    dispatch(logoutUser());
-                  }}
-                  variant="primary"
-                >
-                  <i className="fas fa-sign-out-alt"></i>Log out
-                </Button>
-              ) : (
-                <Link to="/login" className="nav-link navTab">
-                  <Button variant="primary">Sign in</Button>
-                </Link>
-              )}
-            </Form>
+            <>
+              <img
+                className="chip__img"
+                src={AuthReducer.user.avatar}
+                alt="avatar"
+              />
+              <i className="nav_font">
+                {AuthReducer && AuthReducer.user.username}
+              </i>
+            </>
+            <NavDropdown style={{ paddingRight: "102px" }}>
+              <NavDropdown.Item
+                onClick={() => {
+                  dispatch(logoutUser());
+                }}
+              >
+                <i className="fas fa-sign-out-alt"></i>Log out
+              </NavDropdown.Item>
+            </NavDropdown>
           </Navbar.Collapse>
         </Navbar>
       </div>

@@ -27,7 +27,7 @@ const Report = ({ handleClose, show, post, match }) => {
         <Form>
               {" "}
               <select
-              style={{marginTop:'30px',marginBottom:'30px'}}
+                style={{marginTop:'30px',marginBottom:'30px'}}
                 className="form-select col-12"
                 type="text"
                 name="checkbox"

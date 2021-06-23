@@ -33,7 +33,7 @@ const Messages = () => {
           >
             CONTACT US
           </h1>
-          <hr style={{padding:40}} />
+          <hr style={{padding:30}} />
           <div className="row">
             <div className="col-lg-7">
               <form>

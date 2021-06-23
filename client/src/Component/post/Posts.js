@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Container, Row, Col, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,9 +11,9 @@ import { deleteOps, getOps, getOpsbyId } from "../../redux/action/postAction";
 import Comment from "../comment/Comment";
 import { Link } from "react-router-dom";
 import Report from "./Report";
-import TRA from "../../Resource/imgs/needHelp.jpg";
-import TRAA from "../../Resource/imgs/math.jpg";
-import TRAAA from "../../Resource/imgs/curly-bracket.jpg";
+import "./style.css";
+import LightGallery from "lightgallery/react";
+import lgZoom from "lightgallery/plugins/zoom";
 
 const Posts = (props) => {
   const [show, setShow] = useState(false);
@@ -65,6 +65,7 @@ const Posts = (props) => {
                       <Col sm={1}>
                         {
                           <i
+                            style={{ cursor: "pointer" }}
                             className="fas fa-trash-alt"
                             onClick={() => {
                               dispatch(deleteOps(post._id));
@@ -159,7 +160,7 @@ const Posts = (props) => {
                   </Col>
                 </Row>
                 <Card.Footer className="text-muted">
-                  2 minutes ago || asked by{" "}
+                  {new Date(post.created_at).toLocaleString()} || asked by{" "}
                   {UserReducer &&
                     UserReducer.filter((user) => user._id === post.owner).map(
                       (xx, i) => (
@@ -196,27 +197,21 @@ const Posts = (props) => {
             </Container>
           )
         )}
+
       {OnePost && OnePost.gallery && OnePost.gallery.length > 0 && (
         <Container>
-        <Carousel activeIndex={index} onSelect={handleSelect} interval={10000000}>
-          {OnePost.gallery.map((el, i) => (
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
+          <LightGallery plugins={[lgZoom]} mode="lg-fade" >
+            {OnePost.gallery.map((el, i) => (
+              <a
                 key={i}
-                src={el}
-                alt="Image"
-                className="img_post"
-              />
-              {/* <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption> */}
-            </Carousel.Item>
-          ))}
-        </Carousel>
+                data-lg-size="1406-1390"
+                className="gallery-item"
+                data-src={el}
+              >
+                <img src={el}  className="img-responsive" width='250px'  />
+              </a>
+            ))}
+          </LightGallery>
         </Container>
       )}
 

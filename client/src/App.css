@@ -44,6 +44,10 @@ body {
 .header__ {
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
 }
+.nav_font{
+  font-family: 'Changa', sans-serif;
+  font-size: large;
+}
 
 .user_dashboard {
   font-size: 60px;
@@ -253,6 +257,14 @@ body {
   width: 50px;
   border-radius: 50%;
 }
+
+.chip__img {
+  float: left;
+  margin: 0 10px 0 0;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 #logo_{
   width: 50px;
   border-radius: 40%;
@@ -262,7 +274,7 @@ body {
 }
 .img_post{
   width: 100%;
-  align-items: center;
+  height: auto;
 }
 
 .user__card {

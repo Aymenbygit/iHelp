@@ -31,20 +31,19 @@ import EditPost from "./Component/post/EditPost";
 import HelpCenter from "./Component/home/HelpCenter";
 import Footer from "./Component/header_footer/Footer";
 import UserPagination from "./Component/post/UserPagination";
+import Try from "./Component/post/Try";
 
 function App() {
   const UserReducer = useSelector((state) => state.UserReducer);
   const PostList = useSelector((state) => state.PostReducer);
   const [searchValue, setSearchValue] = useState("");
 
-  
   const search = (inputValue) => {
     setSearchValue(inputValue);
   };
-
   return (
     <Router>
-      <Header search={search} />
+      <Header/>
       <Switch>
         <PrivateRoutes
           exact
@@ -87,22 +86,24 @@ function App() {
         <PrivateRoutes exact path="/admin/all_users" component={UserList} />
 
         <Route exact path="/" component={Home} />
-        <Route exact path="/posts" component={PostsList} />
-        {/* <Route exact path="/posts"
+        {/* <Route exact path="/posts" render={(props)=> <PostsList search={search} {...props} />} /> */}
+        <Route exact path="/posts"
+        
         render={() => (
-          <PostsList
-            posts={
-              PostList &&
-              PostList.filter((posts) =>
-                posts.title
-                  .toLowerCase()
-                  .includes(searchValue.toLowerCase().trim())
-              )
-            }
-          />
-          
-        )}/> */}
-        {/* <Route exact path="/posts/:id" component={Posts} /> */}
+            <PostsList
+              postss={
+                PostList &&
+                PostList.filter((posts) =>
+                  posts.title
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase().trim())
+                )
+              }
+              search={search}
+            />
+          )}
+        />
+        
         <Route
           exact
           path="/posts/:id"
@@ -139,6 +140,7 @@ function App() {
         <PublicRoute exact path="/aboutUs" component={About} />
         <PublicRoute exact path="/helpcenter" component={HelpCenter} />
         <Route exact path="/try" component={UserPagination} />
+        <Route exact path="/TryTry" component={Try} />
         <PublicRoute restricted={false} component={Notfound} />
       </Switch>
       {/* <Try/> */}

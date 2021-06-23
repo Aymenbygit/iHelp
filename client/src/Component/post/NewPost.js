@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Accordion, Button, Card, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../redux/action/postAction";
+import Fade from "react-reveal/Fade";
 
 const NewPost = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
@@ -11,10 +12,10 @@ const NewPost = () => {
     title: "",
     description: "",
   });
-  
+
   const handleChange = (e) => {
-    if(e.target.name === "gallery"){
-      setFile(e.target.files)
+    if (e.target.name === "gallery") {
+      setFile(e.target.files);
     } else {
       setPost({ ...post, [e.target.name]: e.target.value });
     }
@@ -40,10 +41,112 @@ const NewPost = () => {
       }
     }
   };
+
+  const [fade, setFade] = useState(false);
+  const handleFade = (e) => {
+    setFade(!fade);
+  };
   return (
     <div>
       <Container>
-        <Accordion defaultActiveKey="0">
+        <div>
+          <button
+            style={{marginTop:'20px',marginBottom:'20px'}}
+            className="btn btn-primary"
+            type="button"
+            onClick={handleFade}
+          >
+            {fade ? (<>Cancel</> ):(<> <i className="fas fa-plus"></i> New Post</> )}
+          </button>
+          <Fade top opposite when={fade}>
+          {fade && <Card>
+              <Form
+                style={{
+                  marginLeft: "5%",
+                  marginRight: "5%",
+                  marginBottom: "1%",
+                  marginTop: "1%",
+                }}
+              >
+                <Form.Group>
+                  <Form.Label as="h5">Title</Form.Label>
+                  <Form.Control
+                    placeholder="any question..."
+                    type="text"
+                    name="title"
+                    onChange={handleChange}
+                    value={post.title}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label as="h5">Upload Images :</Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="gallery"
+                    onChange={handleChange}
+                    multiple
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label as="h5">Body</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={6}
+                    type="text"
+                    placeholder="description"
+                    name="description"
+                    onChange={handleChange}
+                    value={post.description}
+                  />
+                </Form.Group>
+                <div>
+                  {errors && (
+                    <h6
+                      className="badge badge-danger"
+                      style={{ marginBottom: 20 }}
+                    >
+                      {errors}
+                    </h6>
+                  )}
+                </div>
+                {post.description === "" ? (
+                  <Button
+                    style={{ cursor: "not-allowed" }}
+                    variant="primary"
+                    onClick={handleAddPost}
+                    disabled
+                  >
+                    Post
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ cursor: "pointer" }}
+                    variant="primary"
+                    onClick={handleAddPost}
+                  >
+                    Post
+                  </Button>
+                )}
+                &nbsp;
+                <Button
+                  variant="info"
+                  onClick={() =>
+                    setPost({
+                      title: "",
+                      description: "",
+                      comment: [],
+                    })
+                  }
+                >
+                  Reset
+                </Button>
+              </Form>
+            </Card>}
+
+            
+          </Fade>
+        </div>
+        {/* <Accordion defaultActiveKey="0">
           <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="primary" eventKey="1">
@@ -134,51 +237,8 @@ const NewPost = () => {
               </Form>
             </Accordion.Collapse>
           </Card>
-        </Accordion>
+        </Accordion> */}
       </Container>
-      {/* <Modal className="col-sm-8" show={show} onHide={handleClose}>
-        <Form>
-          <Form.Group>
-            <Form.Label as="h5">Title</Form.Label>
-            <Form.Control
-              placeholder="any question..."
-              type="text"
-              name="title"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label as="h5">Body</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              type="text"
-              placeholder="description"
-              name="description"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Button
-            variant="primary"
-            onClick={() => {
-              if (AuthReducer.isAuth) {
-                handleClose();
-                dispatch(addOps(post));
-              } else {
-                alert('Connect first (LINK TO LOGIN) ')
-              }
-            }}
-          >
-            Submit
-          </Button>
-          &nbsp;
-          <Button variant="info" onClick={handleClose}>
-            Cancel
-          </Button>
-        </Form>
-      
-      </Modal>
-     */}
     </div>
   );
 };

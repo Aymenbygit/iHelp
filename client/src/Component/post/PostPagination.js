@@ -14,7 +14,8 @@ import {
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Table = () => {
+const Table = ({postss,search}) => {
+
   const dispatch = useDispatch();
   const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
@@ -23,14 +24,14 @@ const Table = () => {
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [collection, setCollection] = useState(
-    cloneDeep(PostList.slice(0, countPerPage))
+    cloneDeep(postss && postss.slice(0, countPerPage))
   );
   const searchData = useRef(
     throttle((val) => {
       const query = val.toLowerCase();
       setCurrentPage(1);
       const data = cloneDeep(
-        PostList.filter(
+        postss && postss.filter(
           (item) => item.description.toLowerCase().indexOf(query) > -1
         ).slice(0, countPerPage)
       );
@@ -52,13 +53,13 @@ const Table = () => {
     } else {
       searchData.current(value);
     }
-  }, [value, dispatch, PostList]);
+  }, [value, dispatch, postss && postss]);
 
   const updatePage = (p) => {
     setCurrentPage(p);
     const to = countPerPage * p;
     const from = to - countPerPage;
-    setCollection(cloneDeep(PostList.slice(from, to)));
+    setCollection(cloneDeep(postss && postss.slice(from, to)));
   };
 
   const scrollToTop = () => {
@@ -160,16 +161,16 @@ const Table = () => {
             </Col>
             <Col className="col-sm-10">
               <Card.Body>
-                <Card.Title> {el.gallery.length} <i class="fas fa-paperclip"></i> attachment</Card.Title>
+                {el.gallery.length>0 && <Card.Title> {el.gallery.length} <i className="fas fa-paperclip"></i> attachment</Card.Title>}
                 <Card.Text>
                   {el.description.length > 150
                     ? el.description.slice(0, 150) + "... "
                     : el.description}
                   {el.description.length > 150 && (
-                    <Link to={`/posts/${el._id}`}>read more</Link>
+                    <a href={`/posts/${el._id}`}>read more</a>
                   )}
                 </Card.Text>
-                <Link to={`/posts/${el._id}`}>
+                <a href={`/posts/${el._id}`}>
                   <Button
                     variant="primary"
                     onClick={() => {
@@ -178,7 +179,7 @@ const Table = () => {
                   >
                     <i className="far fa-comment-alt"></i> Comment
                   </Button>
-                </Link>
+                </a>
               </Card.Body>
             </Col>
           </Row>
@@ -201,6 +202,7 @@ const Table = () => {
 
   return (
     <>
+
       {collection && tableData()}
 
       <nav>
@@ -210,8 +212,8 @@ const Table = () => {
             pageSize={countPerPage}
             onChange={updatePage}
             current={currentPage}
-            total={PostList.length}
-            onClick={scrollToTop()}
+            total={postss && postss.length}
+            // onClick={scrollToTop()}
           />
         </ul>
       </nav>
