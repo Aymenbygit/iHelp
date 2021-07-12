@@ -9,7 +9,7 @@ router.post("/new_message", (req, res) => {
     let newMessage = new Message({ ...req.body });
     newMessage
       .save()
-      .then((Message) => res.status(200).send(Message))
+      .then(() => res.status(200).send('Your message has been sent successfully'))
       .catch((err) => {
         console.error(err.message);
         res.status(500).send({ msg: "Server Error" });
@@ -34,5 +34,16 @@ router.post("/new_message", (req, res) => {
           res.status(500).send({ msg: "Server Error" });
         });
     });
+    
+//mark as read msg by id
+    router.put("/:id", authMiddleware, (req, res) => {
+      Message.findByIdAndUpdate({ _id: req.params.id}, { ...req.body,read:true })
+        .then((e) => res.json(e))
+        .catch((err) => {
+          console.error(err.message);
+          res.status(500).send({ msg: "Server Error" });
+        });
+    });
+
 
 module.exports = router ;

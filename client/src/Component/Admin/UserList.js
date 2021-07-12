@@ -2,22 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getOps } from "../../redux/action/postAction";
 import {
-  addFav,
   allUsers,
   loadUser,
-  removeFav,
 } from "../../redux/action/authAction";
 import { Link } from "react-router-dom";
 import { Col, Container, Form } from "react-bootstrap";
-
+import "./user.css";
 const UserList = ({ search, users }) => {
   const dispatch = useDispatch();
   const AuthReducer = useSelector((state) => state.AuthReducer);
-  const UserReducer = useSelector((state) => state.UserReducer);
   const countPerPage = 8;
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,9 +25,9 @@ const UserList = ({ search, users }) => {
       const query = val.toLowerCase();
       setCurrentPage(1);
       const data = cloneDeep(
-        users.filter(
-          (item) => item.description.toLowerCase().indexOf(query) > -1
-        ).slice(0, countPerPage)
+        users
+          .filter((item) => item.description.toLowerCase().indexOf(query) > -1)
+          .slice(0, countPerPage)
       );
       setCollection(data);
     }, 400)
@@ -74,7 +70,7 @@ const UserList = ({ search, users }) => {
           <h5>
             {el.first_name} {el.last_name}
           </h5>
-          <p className="user_title">{el.username ? el.username :'--'}</p>
+          <p className="user_title">{el.username ? el.username : "--"}</p>
           <a
             href="mailto:{el.email}"
             target="_blank"
@@ -118,32 +114,30 @@ const UserList = ({ search, users }) => {
       ></div>
       <div className="msg_right">
         <Container>
-        <Form  className="search-title-form" style={{paddingTop:30,paddingLeft:30}}>
-          <Form.Row>
-            <Col xs={7}>
-              <Form.Control
-                type="text"
-                name="title"
-                onChange={(e) => search(e.target.value)}
-                className="search-title-input"
-                placeholder="Search user..."
-              />
-            </Col>
-          </Form.Row>
-        </Form>
+          <Form
+            className="search-title-form"
+            style={{ paddingTop: 30, paddingLeft: 30 }}
+          >
+            <Form.Row>
+              <Col xs={7}>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  onChange={(e) => search(e.target.value)}
+                  className="search-title-input"
+                  placeholder="Search user..."
+                />
+              </Col>
+            </Form.Row>
+          </Form>
           <div className="row">{collection && tableData()}</div>
-          <nav>
-            <ul className="pagination justify-content-center">
               <Pagination
-                className="page-link"
                 pageSize={countPerPage}
                 onChange={updatePage}
                 current={currentPage}
                 total={users && users.length}
-                onClick={scrollToTop()}
+                // onClick={scrollToTop()}
               />
-            </ul>
-          </nav>
         </Container>
       </div>
     </div>

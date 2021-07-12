@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../../redux/action/messageAction";
 
 const Messages = () => {
@@ -23,17 +23,36 @@ const Messages = () => {
       subject: "",
     });
   };
+  const [showMsg, setShowMsg] = useState(false);
+  const SuccessMsg = useSelector((state) => state.SuccessMsg);
+  const [smessage, setSmessage] = useState(null);
+  useEffect(() => {
+    if (SuccessMsg) {
+      setSmessage(SuccessMsg);
+      setShowMsg(true)
+      setTimeout(() => {
+        setSmessage(null);
+        setShowMsg(false)
+      }, 3000);
+    }
+  }, [SuccessMsg]);
   return (
     <div>
       <div className="site-section">
+          {showMsg &&
+            <div className="success-msg">
+              <i className="fa fa-check"></i>&nbsp;
+              {smessage}.
+            </div>
+          }
         <div className="container">
           <h1
             className="text-uppercase"
-            style={{ textAlign: "center", paddingTop:38 }}
+            style={{ textAlign: "center", paddingTop: 38 }}
           >
             CONTACT US
           </h1>
-          <hr style={{padding:30}} />
+          <hr style={{ padding: 30 }} />
           <div className="row">
             <div className="col-lg-7">
               <form>

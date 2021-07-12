@@ -1,18 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteRaport, getReports } from "../../redux/action/reportAction";
 import { allUsers, loadUser } from "../../redux/action/authAction";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getOps } from "../../redux/action/postAction";
 
-const Reports = ({ filter, toggle }) => {
+const Reports = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const ReportReducer = useSelector((state) => state.ReportReducer);
   const PostList = useSelector((state) => state.PostReducer);
   const UserReducer = useSelector((state) => state.UserReducer);
-
   const dispatch = useDispatch();
+  // const [reportData, setReportData] = useState(ReportReducer);
+
+  // const filter = (button) => {
+  //   if (button === "All") {
+  //     return setReportData(ReportReducer);
+  //   }
+  //   const filteredData = ReportReducer.filter(
+  //     (item) => item.target.includes(PostList.map((el) => el.target)) === button
+  //   );
+  //   setReportData(filteredData);
+  // };
 
   useEffect(() => {
     if (AuthReducer.isAuth) {
@@ -34,21 +44,6 @@ const Reports = ({ filter, toggle }) => {
         }}
       ></div>
       <div className="msg_right col-xl-9">
-        <DropdownButton
-          title={<i className="fas fa-filter">Filter</i>}
-          id="bg-nested-dropdown"
-          style={{ paddingTop: "30px", paddingBottom: "30px" }}
-        >
-          <Dropdown.Item eventKey="1">
-            <div>All</div>
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            <div>Available</div>
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            <div>Deteled</div>
-          </Dropdown.Item>
-        </DropdownButton>
         {AuthReducer.user &&
         AuthReducer.user.type &&
         AuthReducer.user.type === true &&
@@ -79,7 +74,9 @@ const Reports = ({ filter, toggle }) => {
                         )
                       )}
                   </Card.Title>
-                  <Card.Text><b>{el.checkbox}</b> </Card.Text>
+                  <Card.Text>
+                    <b>{el.checkbox}</b>{" "}
+                  </Card.Text>
                   <Card.Text>{el.body}</Card.Text>
                   <Card.Text>
                     {new Date(el.created_at).toLocaleString()}

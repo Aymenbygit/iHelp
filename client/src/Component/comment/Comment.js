@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Container, Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { addCom } from "../../redux/action/postAction";
 import { getOps } from "../../redux/action/postAction";
 import { Link } from "react-router-dom";
@@ -32,25 +32,27 @@ const Comment = ({ postli }) => {
   };
   return (
     <div>
+      
       <Container>
-        Comments{" "}
         <Form.Group>
           <Form.Control
             as="textarea"
             cols="92"
             rows="10"
             type="text"
-            placeholder="Comments"
+            placeholder="write a  comment..."
             name="body"
             onChange={handleChange}
             value={post.body}
           />{" "}
         </Form.Group>{" "}
         {AuthReducer.isAuth ? (
-          <Button onClick={handleAdd}> Add a comment </Button>
+          <button class="buton-gradyan btn btn-hover" onClick={handleAdd}>
+            Add a comment
+          </button>
         ) : (
           <Link to="/login">
-            <Button>Add a comment</Button>
+            <button class="buton-gradyan btn btn-hover">Add a comment</button>
           </Link>
         )}
       </Container>{" "}

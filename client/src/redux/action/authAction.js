@@ -15,6 +15,7 @@ import {
   ADD_FAV_SUCCESS,
   REMOVE_FAV_SUCCESS,
   GET_USER_SUCCESS,
+  CANCEL,
 } from "./type";
 import axios from "axios";
 import setToken from "../../setToken";
@@ -143,6 +144,10 @@ export const addFav = (user_id, _id) => async (dispatch) => {
         payload: res.data,
       });
       dispatch(loadUser());
+      dispatch({
+        type: CANCEL,
+        payload: res.data,
+      });
     })
     .catch((res) => {
       dispatch({
@@ -161,6 +166,10 @@ export const removeFav = (user_id, _id) => async (dispatch) => {
         payload: res.data,
       });
       dispatch(loadUser());
+      dispatch({
+        type: CANCEL,
+        payload: res.data,
+      });
     })
     .catch((res) => {
       dispatch({

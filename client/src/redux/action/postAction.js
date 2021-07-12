@@ -13,6 +13,7 @@ import {
   SEARCH_BY_TITLE_FAIL,
   ADD_POST_SUCCESS,
   ADD_POST_FAIL,
+  CANCEL,
 } from "./type";
 import axios from "axios";
 import setToken from "../../setToken";
@@ -137,6 +138,10 @@ export const addCom = (_id, info) => (dispatch) => {
         payload: res.data,
       });
       dispatch(getOps());
+      dispatch({
+        type: CANCEL,
+        payload: res.data,
+      });
     })
     .catch((err) =>
       dispatch({

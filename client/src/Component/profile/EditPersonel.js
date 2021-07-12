@@ -170,7 +170,8 @@ const EditPersonel = () => {
               <img
                 src={info.avatar}
                 style={{ width: "150px", borderRadius: "50%" }}
-                alt=""
+                alt="img"
+                hidden
               />
               <table className="table ">
                 <tbody>

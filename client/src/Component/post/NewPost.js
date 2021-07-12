@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../../redux/action/postAction";
 import Fade from "react-reveal/Fade";
@@ -59,7 +59,7 @@ const NewPost = () => {
             {fade ? (<>Cancel</> ):(<> <i className="fas fa-plus"></i> New Post</> )}
           </button>
           <Fade top opposite when={fade}>
-          {fade && <Card>
+          {fade && <Card  style={{marginBottom:'30px'}}>
               <Form
                 style={{
                   marginLeft: "5%",

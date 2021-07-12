@@ -13,11 +13,11 @@ import {
 } from "../../redux/action/authAction";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "../Admin/user.css";
 
-const Table = ({postss,search}) => {
+const Table = ({postss}) => {
 
   const dispatch = useDispatch();
-  const PostList = useSelector((state) => state.PostReducer);
   const AuthReducer = useSelector((state) => state.AuthReducer);
   const UserReducer = useSelector((state) => state.UserReducer);
   const countPerPage = 5;
@@ -68,8 +68,6 @@ const Table = ({postss,search}) => {
       behavior: "smooth",
     });
   };
-
-  const [errors, setErrors] = useState(null);
 
   const tableData = () => {
     return collection.map((el, i) => (
@@ -202,9 +200,7 @@ const Table = ({postss,search}) => {
 
   return (
     <>
-
       {collection && tableData()}
-
       <nav>
         <ul className="pagination justify-content-center">
           <Pagination

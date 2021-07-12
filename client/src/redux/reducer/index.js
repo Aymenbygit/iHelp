@@ -7,5 +7,6 @@ import OnePost from "./onePost";
 import MsgReducer from "./msgReducer";
 import MyComm from "./myCom";
 import SavedPost from "./savedPost";
+import SuccessMsg from "./successMsg";
 
-export default combineReducers({ AuthReducer,PostReducer,UserReducer,ReportReducer,OnePost,MsgReducer,MyComm,SavedPost });
+export default combineReducers({ AuthReducer,PostReducer,UserReducer,ReportReducer,OnePost,MsgReducer,MyComm,SavedPost,SuccessMsg });

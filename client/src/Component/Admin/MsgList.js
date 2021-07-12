@@ -4,12 +4,11 @@ import {
   Card,
   ListGroupItem,
   ListGroup,
-  Dropdown,
-  DropdownButton,
   Container,
 } from "react-bootstrap";
-import { getMessages } from "../../redux/action/messageAction";
+import { getMessages, readMsg } from "../../redux/action/messageAction";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const MsgList = () => {
   const dispatch = useDispatch();
@@ -17,7 +16,15 @@ const MsgList = () => {
   useEffect(() => {
     dispatch(getMessages());
   }, [dispatch]);
-
+  const [msgData, setMsgData] = useState(MsgReducer)
+  const filter = (button) => {
+    if(button === 'All'){
+      return setMsgData(MsgReducer)
+    }
+    const filteredData = MsgReducer.filter(item=>item.read === button )
+    setMsgData(filteredData)
+  }
+  
   return (
     <div className="msg_container">
       <div
@@ -29,26 +36,15 @@ const MsgList = () => {
         }}
       ></div>
       <div className="msg_right col-xl-9">
-        <div className="">
+        <div>
           <Container>
-            <DropdownButton
-              title={<i className="fas fa-filter">Filter</i>}
-              id="bg-nested-dropdown"
-              style={{paddingTop:"30px"}}
-            >
-              <Dropdown.Item eventKey="1">
-                <div>All</div>
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="2">
-                <div>Read</div>
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="2">
-                <div>Unread</div>
-              </Dropdown.Item>
-            </DropdownButton>
+            <div className="btn-group">
+              <button type='button' className="btn btn-primary" onClick={()=>filter('All')} >All</button>
+              <button type='button' className="btn btn-primary" onClick={()=>filter(true)} >Read</button>
+              <button type='button' className="btn btn-primary" onClick={()=>filter(false)} >Unread</button>
+            </div>
           </Container>
-          {MsgReducer &&
-            MsgReducer.map((msg, i) => (
+          {msgData.map((msg, i) => (
               <div key={i} >
                 <Card  style={{ margin: 25 }}>
                   <Card.Body>
@@ -60,8 +56,8 @@ const MsgList = () => {
                     <ListGroupItem>{msg.email}</ListGroupItem>
                   </ListGroup>
                   <Card.Body style={{ textAlign: "center" }}>
-                    <Card.Link as={Link} to={`/admin/message/${msg._id}`}>
-                      See full message
+                    <Card.Link as={Link} to={`/admin/message/${msg._id}`} >
+                    <button type='button' className="btn btn-primary" onClick={()=>[dispatch(readMsg(msg._id))]} >See full message</button>  
                     </Card.Link>
                   </Card.Body>
                 </Card>

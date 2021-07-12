@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import {
   Navbar,
-  FormControl,
   Button,
   Form,
   NavDropdown,
   Nav,
-  InputGroup,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logoutUser } from "../../redux/action/authAction";
+import Logo from "../../Resource/imgs/it-i-help.png"
 
 const Header = () => {
   const AuthReducer = useSelector((state) => state.AuthReducer);
@@ -34,8 +33,8 @@ const Header = () => {
           className="header__"
         >
           <Navbar.Brand>
-            {/* <img src={Logo} id="logo_" /> */}
-            <span className="user_name">iHELP</span>
+            <img src={Logo} id="logo_" alt='logo'/>
+            {/* <span className="user_name">iHELP</span> */}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -92,8 +91,8 @@ const Header = () => {
           className="header__ "
         >
           <Navbar.Brand>
-            {/* <img src={Logo} id="logo_" /> */}
-            <span className="user_name">iHELP</span>
+          <img src={Logo} id="logo_" alt='logo'/>
+            {/* <span className="user_name">iHELP</span> */}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -164,8 +163,8 @@ const Header = () => {
           className="header__"
         >
           <Navbar.Brand>
-            {/* <img src={Logo} id="logo_" /> */}
-            <span className="user_name">iHELP</span>
+          <img src={Logo} id="logo_" alt='logo'/>
+            {/* <span className="user_name">iHELP</span> */}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

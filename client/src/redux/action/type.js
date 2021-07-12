@@ -45,6 +45,8 @@ export const ADD_COM_FAIL = "ADD_COM_FAIL";
 export const ADD_FAV_SUCCESS = "ADD_FAV_SUCCESS";
 export const ADD_FAV_FAIL = "ADD_FAV_FAIL";
 
+export const CANCEL = "CANCEL";
+
 export const REMOVE_FAV_SUCCESS = "REMOVE_FAV_SUCCESS";
 export const REMOVE_FAV_FAIL = "REMOVE_FAV_FAIL";
 

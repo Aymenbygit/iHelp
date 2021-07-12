@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Form, Col } from "react-bootstrap";
 import { getOps } from "../../redux/action/postAction";
 import { searchByTitle } from "../../redux/action/postAction";

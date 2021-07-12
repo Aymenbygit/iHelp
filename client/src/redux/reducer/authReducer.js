@@ -37,10 +37,7 @@ const AuthReducer = (state = initialState, action) => {
 
     case ADD_FAV_SUCCESS: 
     case REMOVE_FAV_SUCCESS: 
-     return {
-      ...state, 
-      error : action.payload ,
-  }
+     return state
     case LOAD_USER_SUCCESS:
       return {
         ...state,

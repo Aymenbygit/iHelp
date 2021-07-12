@@ -37,6 +37,11 @@ const UserDetail = (props) => {
                   <h1 style={{ color: "grey" }}>Personal Information</h1>
                   <div className="row">
                     <div className="col-lg-6">
+                    <img
+                src={user.avatar}
+                style={{ width: "150px", borderRadius: "50%" }}
+                alt=""
+              />
                       <table className="table">
                         <tbody>
                           <tr>

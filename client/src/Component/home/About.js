@@ -1,8 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import about from "../../Resource/imgs/iHelpLogo.png";
-
+import Logo from "../../Resource/imgs/it-i-help.png"
 const About = () => {
   return (
     <div className=" about_us">
@@ -29,7 +28,7 @@ const About = () => {
             and volunteering and to share experience and knowledge.
           </div>
         </div>
-        <img src={about} style={{ width: "80%" }} alt="" />
+        <img src={Logo} style={{ width: "80%"}} alt="Logo" />
         <div className="row">
           <div className="col-6">
             <b>

@@ -1,4 +1,4 @@
-import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS} from "./type";
+import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS, CANCEL} from "./type";
   import axios from "axios";
   import setToken from "../../setToken";
   
@@ -22,13 +22,16 @@ import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS} from "./type";
           type: ADD_MSG_SUCCESS,
           payload: res.data,
         })
-        dispatch(getMessages())
+        dispatch({
+          type: CANCEL,
+          payload: res.data,
+        });
       }
       )
   };
 
   export const deleteMsg = (id) => (dispatch) => {
-    axios.delete(`/post/${id}`).then((res) =>{
+    axios.delete(`/message/${id}`).then((res) =>{
       dispatch({
         type: 'DELETE_MSG_SUCCESS',
         payload: res.data,
@@ -37,5 +40,15 @@ import {GET_MSG_SUCCESS, ADD_MSG_SUCCESS} from "./type";
       )
     
   };
-  
-  
+
+//mark as read msg by id
+  export const readMsg = (id) => (dispatch) => {
+    axios.put(`/message/${id}`).then((res) =>{
+      dispatch({
+        type: 'READ_MSG_SUCCESS',
+        payload: res.data,
+      })
+      dispatch(getMessages())}
+      )
+    
+  };

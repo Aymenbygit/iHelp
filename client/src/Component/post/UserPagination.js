@@ -6,10 +6,8 @@ import "rc-pagination/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getOps } from "../../redux/action/postAction";
 import {
-  addFav,
   allUsers,
   loadUser,
-  removeFav,
 } from "../../redux/action/authAction";
 import { Link } from "react-router-dom";
 

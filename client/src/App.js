@@ -30,7 +30,6 @@ import Delete from "./Component/profile/Delete";
 import EditPost from "./Component/post/EditPost";
 import HelpCenter from "./Component/home/HelpCenter";
 import Footer from "./Component/header_footer/Footer";
-import UserPagination from "./Component/post/UserPagination";
 import Try from "./Component/post/Try";
 
 function App() {
@@ -139,11 +138,9 @@ function App() {
         <PublicRoute exact path="/contactUs" component={Messages} />
         <PublicRoute exact path="/aboutUs" component={About} />
         <PublicRoute exact path="/helpcenter" component={HelpCenter} />
-        <Route exact path="/try" component={UserPagination} />
-        <Route exact path="/TryTry" component={Try} />
+        <Route exact path="/try" component={Try} />
         <PublicRoute restricted={false} component={Notfound} />
       </Switch>
-      {/* <Try/> */}
       <Footer />
     </Router>
   );
